@@ -26,10 +26,13 @@ CO.cardTags = (() => {
         el.className = 'co-tag';
         el.style.backgroundColor = color;
         el.style.color = CO.tags.contrastText(color);
-        el.title = inTooltip ? '' : tag.name;
         el.innerHTML = `<span class="co-tag-name">${escapeHTML(tag.name)}</span>`
             + `<button type="button" class="co-tag-remove" aria-label="${escapeHTML(t('tag_remove', tag.name))}" title="${escapeHTML(t('tag_remove', tag.name))}">×</button>`;
         el.querySelector('.co-tag-remove').onclick = () => CO.tags.apply([classId], tagId, false);
+        if (!inTooltip) {
+            el.addEventListener('mouseenter', () => onChipEnter(el, classId));
+            el.addEventListener('mouseleave', scheduleHide);
+        }
         return el;
     }
 
@@ -141,13 +144,26 @@ CO.cardTags = (() => {
         });
     }
 
-    // --- Lista completa de etiquetas de una clase (al pulsar «+N») ---
+    // --- Lista completa de etiquetas de una clase ---
+    // Como en NotebookLM Organizer: al pasar por una etiqueta se abre de paso (solo si aporta algo:
+    // hay etiquetas tras «+N» o su nombre está recortado) y pulsar «+N» la deja fija.
+    let hideTimer = null;
+
     function closeTooltip() {
+        clearTimeout(hideTimer);
         tooltip?.remove();
         tooltip = null;
         document.removeEventListener('pointerdown', onOutsidePointer, true);
         document.removeEventListener('keydown', onTooltipKey, true);
         document.removeEventListener('scroll', closeTooltip, true);
+    }
+
+    // La de paso se cierra al salir de la etiqueta, salvo que el puntero haya pasado a la lista
+    function scheduleHide() {
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => {
+            if (tooltip && tooltip.dataset.sticky !== 'true' && tooltip.dataset.hovered !== 'true') closeTooltip();
+        }, 150);
     }
 
     function onOutsidePointer(e) {
@@ -158,29 +174,52 @@ CO.cardTags = (() => {
         if (e.key === 'Escape') { e.stopPropagation(); closeTooltip(); }
     }
 
+    // Solo se rehace si cambian las etiquetas: así no se sustituye lo que está bajo el puntero
     function fillTooltip() {
         const classId = tooltip.dataset.classId;
         const tagIds = CO.tags.ofClass(classId);
         if (tagIds.length === 0) { closeTooltip(); return; }
+        const sig = signature(classId);
+        if (tooltip.dataset.sig === sig) return;
+        tooltip.dataset.sig = sig;
         tooltip.replaceChildren(...tagIds.map(tagId => chip(classId, tagId, { inTooltip: true })));
     }
 
+    function showTooltip(anchor, classId, sticky) {
+        if (tooltip?.dataset.classId !== classId) {
+            closeTooltip();
+            tooltip = document.createElement('div');
+            tooltip.className = 'co-tags-tooltip';
+            tooltip.dataset.classId = classId;
+            isolate(tooltip);
+            tooltip.addEventListener('mouseenter', () => { tooltip.dataset.hovered = 'true'; clearTimeout(hideTimer); });
+            tooltip.addEventListener('mouseleave', () => { if (!tooltip) return; tooltip.dataset.hovered = 'false'; scheduleHide(); });
+            const rect = anchor.getBoundingClientRect();
+            tooltip.style.top = `${rect.bottom + 4}px`;
+            tooltip.style.left = `${rect.left}px`;
+            document.body.appendChild(tooltip);
+            fillTooltip();
+            document.addEventListener('pointerdown', onOutsidePointer, true);
+            document.addEventListener('keydown', onTooltipKey, true);
+            // Está fijada a la pantalla: al desplazar la página dejaría de señalar a su tarjeta
+            document.addEventListener('scroll', closeTooltip, true);
+        }
+        clearTimeout(hideTimer);
+        if (sticky) tooltip.dataset.sticky = 'true';
+    }
+
+    // «+N»: abre la lista fija, o la cierra si ya lo estaba
     function toggleTooltip(anchor, classId) {
-        if (tooltip?.dataset.classId === classId) { closeTooltip(); return; }
-        closeTooltip();
-        tooltip = document.createElement('div');
-        tooltip.className = 'co-tags-tooltip';
-        tooltip.dataset.classId = classId;
-        isolate(tooltip);
-        const rect = anchor.getBoundingClientRect();
-        tooltip.style.top = `${rect.bottom + 4}px`;
-        tooltip.style.left = `${rect.left}px`;
-        document.body.appendChild(tooltip);
-        fillTooltip();
-        document.addEventListener('pointerdown', onOutsidePointer, true);
-        document.addEventListener('keydown', onTooltipKey, true);
-        // Está fijada a la pantalla: al desplazar la página dejaría de señalar a su tarjeta
-        document.addEventListener('scroll', closeTooltip, true);
+        if (tooltip?.dataset.classId === classId && tooltip.dataset.sticky === 'true') closeTooltip();
+        else showTooltip(anchor, classId, true);
+    }
+
+    function onChipEnter(el, classId) {
+        const more = el.closest(`.${CONTAINER_CLASS}`)?.querySelector('.co-more-tags');
+        const name = el.querySelector('.co-tag-name');
+        const hasHidden = more && !more.hidden;
+        const isTruncated = name.scrollWidth > name.clientWidth;
+        if (hasHidden || isTruncated) showTooltip(el, classId, false);
     }
 
     // Ancho con el que se ajustó por última vez: si cambia (o la tarjeta estaba oculta), se reajusta
