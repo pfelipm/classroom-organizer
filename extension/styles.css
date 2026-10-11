@@ -1254,3 +1254,97 @@ li[data-course-id]:hover .co-tag-add,
     outline: 2px solid #a8c7fa;
     outline-offset: 2px;
 }
+
+/* ===================== Copias de seguridad ===================== */
+.co-import-modal {
+    width: 420px;
+}
+
+.co-import-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding: 16px;
+    border-radius: var(--co-radius);
+    background: var(--co-surface-2);
+    text-align: left;
+}
+
+.co-import-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.co-import-option input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.co-import-option-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.co-import-option-title {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.co-import-option-desc {
+    font-size: 11px;
+    color: var(--co-text-muted);
+}
+
+.co-btn-primary:disabled {
+    opacity: 0.45;
+    cursor: default;
+    filter: none;
+}
+
+/* Medidor del espacio de Chrome Sync */
+.co-storage-meter {
+    padding: 10px 24px 12px;
+    border-top: 1px solid var(--co-surface-3);
+    font-size: 12px;
+    color: var(--co-text-muted);
+}
+
+.co-storage-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.co-storage-bar {
+    height: 6px;
+    overflow: hidden;
+    border-radius: 3px;
+    background: var(--co-surface-3);
+}
+
+.co-storage-fill {
+    width: 1%;
+    height: 100%;
+    border-radius: 3px;
+    background: var(--co-primary);
+    transition: width 0.3s;
+}
+
+.co-storage-meter.warning .co-storage-fill {
+    background: #e37400;
+}
+
+.co-storage-meter.danger .co-storage-fill {
+    background: var(--co-danger);
+}
+
+.co-storage-meter.danger .co-storage-value {
+    color: var(--co-danger);
+    font-weight: 500;
+}

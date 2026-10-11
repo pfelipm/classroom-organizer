@@ -52,5 +52,25 @@ CO.dialogs = (() => {
         overlay.querySelector('.co-btn-cancel').focus(); // Opción segura por defecto
     }
 
-    return { closeOnEscape, createOverlay, confirm };
+    // Aviso con un único botón. message se inserta como HTML: quien llama escapa los datos del usuario
+    function alert(title, message) {
+        const { t, escapeHTML } = CO.i18n;
+        const overlay = createOverlay();
+        overlay.classList.add('co-modal-overlay-top');
+        overlay.innerHTML = `
+            <div class="co-confirm-modal" role="alertdialog" aria-modal="true">
+                <div class="co-confirm-title">${escapeHTML(title)}</div>
+                <div class="co-confirm-message">${message}</div>
+                <div class="co-confirm-actions">
+                    <button type="button" class="co-btn-primary">${escapeHTML(t('alert_understood'))}</button>
+                </div>
+            </div>`;
+        const close = () => overlay.remove();
+        overlay.querySelector('.co-btn-primary').onclick = close;
+        closeOnEscape(overlay, close);
+        document.body.appendChild(overlay);
+        overlay.querySelector('.co-btn-primary').focus();
+    }
+
+    return { closeOnEscape, createOverlay, confirm, alert };
 })();

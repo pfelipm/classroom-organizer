@@ -61,6 +61,9 @@ CO.manageModal = (() => {
                             ${langOpt('en', 'EN', t('lang_en'))}
                             ${langOpt('ca', 'CA', t('lang_ca'))}
                         </div>
+                        <button type="button" class="co-btn-icon co-export" title="${escapeHTML(t('modal_export_help'))}" aria-label="${escapeHTML(t('modal_export_help'))}">${icon('download', 20)}</button>
+                        <button type="button" class="co-btn-icon co-import" title="${escapeHTML(t('modal_import_help'))}" aria-label="${escapeHTML(t('modal_import_help'))}">${icon('upload', 20)}</button>
+                        <input type="file" class="co-import-file" accept=".json,application/json" hidden>
                         <button type="button" class="co-btn-icon co-modal-close" title="${escapeHTML(t('modal_close'))}" aria-label="${escapeHTML(t('modal_close'))}">${icon('close', 22)}</button>
                     </div>
                 </div>
@@ -78,6 +81,15 @@ CO.manageModal = (() => {
                         <input type="text" class="co-manage-filter-input" placeholder="${escapeHTML(t('modal_filter_placeholder'))}" aria-label="${escapeHTML(t('modal_filter_placeholder'))}">
                     </div>
                     <div class="co-manage-list"></div>
+                </div>
+                <div class="co-storage-meter" title="${escapeHTML(t('storage_meter_help'))}">
+                    <div class="co-storage-head">
+                        <span>${escapeHTML(t('storage_meter_label'))}</span>
+                        <span class="co-storage-value">…</span>
+                    </div>
+                    <div class="co-storage-bar" role="meter" aria-label="${escapeHTML(t('storage_meter_label'))}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="co-storage-fill"></div>
+                    </div>
                 </div>
                 <div class="co-modal-footer">
                     ${escapeHTML(t('attribution_created_by'))} <a href="https://www.linkedin.com/in/pfelipm/" target="_blank" rel="noopener">Pablo Felip</a>
@@ -224,13 +236,39 @@ CO.manageModal = (() => {
             };
         });
 
+        overlay.querySelector('.co-export').onclick = () => CO.backup.exportFile();
+        // El selector de archivos forma parte del panel (oculto) y el botón lo abre
+        const fileInput = overlay.querySelector('.co-import-file');
+        overlay.querySelector('.co-import').onclick = () => fileInput.click();
+        fileInput.onchange = async () => {
+            const file = fileInput.files[0];
+            fileInput.value = ''; // Para poder elegir otra vez el mismo archivo
+            if (file) handleImportFile(await file.text(), () => renderList());
+        };
+
+        // Medidor del espacio de Chrome Sync
+        const updateMeter = async () => {
+            const { bytes, quota } = await CO.store.usage();
+            if (!overlay.isConnected) return;
+            const pct = Math.min(100, Math.round(bytes / quota * 100));
+            const meter = overlay.querySelector('.co-storage-meter');
+            meter.classList.toggle('warning', pct >= 80 && pct < 95);
+            meter.classList.toggle('danger', pct >= 95);
+            meter.querySelector('.co-storage-value').textContent = t('storage_meter_value', formatKB(bytes), formatKB(quota), pct);
+            meter.querySelector('.co-storage-fill').style.width = `${Math.max(pct, 1)}%`;
+            meter.querySelector('.co-storage-bar').setAttribute('aria-valuenow', String(pct));
+        };
+
         overlay.querySelector('.co-modal-close').onclick = close;
         overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
         CO.dialogs.closeOnEscape(overlay, close);
 
         // Cambios desde otra pestaña: refrescamos los recuentos, salvo con un nombre a medio editar
+        let meterTimer = null;
         const unsubscribe = CO.store.subscribe(() => {
             if (!overlay.isConnected) return;
+            clearTimeout(meterTimer);
+            meterTimer = setTimeout(updateMeter, 1500);
             if (document.activeElement?.classList.contains('co-tag-edit-input')) return;
             renderList();
         });
@@ -238,7 +276,70 @@ CO.manageModal = (() => {
         document.body.appendChild(overlay);
         renderCreatePalette();
         renderList();
+        updateMeter();
         createInput.focus();
+    }
+
+    function formatKB(bytes) {
+        return (bytes / 1024).toLocaleString(CO.i18n.locale(), { maximumFractionDigits: 1 });
+    }
+
+    // --- Importar ---
+    function handleImportFile(text, onDone) {
+        const { t, escapeHTML } = CO.i18n;
+        const result = CO.backup.parse(text);
+        if (result.error) {
+            const kind = result.error === 'read' ? 'read' : 'format';
+            CO.dialogs.alert(t(`import_error_${kind}_title`), escapeHTML(t(`import_error_${kind}_msg`)));
+            return;
+        }
+        showImportOptions(result, onDone);
+    }
+
+    // Qué partes del archivo sustituyen a las actuales
+    function showImportOptions({ data, counts }, onDone) {
+        const { t, escapeHTML } = CO.i18n;
+        const overlay = CO.dialogs.createOverlay();
+        overlay.classList.add('co-modal-overlay-top');
+        const option = (id, title, desc, checked) => `
+            <label class="co-import-option">
+                <input type="checkbox" data-part="${id}" ${checked ? 'checked' : ''}>
+                <span class="co-import-option-text">
+                    <span class="co-import-option-title">${escapeHTML(title)}</span>
+                    <span class="co-import-option-desc">${escapeHTML(desc)}</span>
+                </span>
+            </label>`;
+        overlay.innerHTML = `
+            <div class="co-confirm-modal co-import-modal" role="dialog" aria-modal="true">
+                <div class="co-confirm-title">${escapeHTML(t('import_title'))}</div>
+                <div class="co-confirm-message">${escapeHTML(t('import_msg'))}</div>
+                <div class="co-import-options">
+                    ${option('tags', t('import_opt_tags'), t('import_opt_tags_desc', counts.tags), true)}
+                    ${option('classes', t('import_opt_classes'), t('import_opt_classes_desc', counts.classes), true)}
+                    ${option('prefs', t('import_opt_prefs'), t('import_opt_prefs_desc'), false)}
+                </div>
+                <div class="co-confirm-actions">
+                    <button type="button" class="co-btn-cancel">${escapeHTML(t('btn_cancel'))}</button>
+                    <button type="button" class="co-btn-primary">${escapeHTML(t('import_btn_confirm'))}</button>
+                </div>
+            </div>`;
+        const close = () => overlay.remove();
+        const confirmBtn = overlay.querySelector('.co-btn-primary');
+        const boxes = [...overlay.querySelectorAll('[data-part]')];
+        // Sin nada marcado no hay nada que importar
+        const syncConfirm = () => { confirmBtn.disabled = !boxes.some(b => b.checked); };
+        boxes.forEach(b => { b.onchange = syncConfirm; });
+        overlay.querySelector('.co-btn-cancel').onclick = close;
+        confirmBtn.onclick = () => {
+            const parts = Object.fromEntries(boxes.map(b => [b.dataset.part, b.checked]));
+            CO.backup.importParts(data, parts);
+            close();
+            onDone?.();
+            CO.snackbar.show(t('import_success'));
+        };
+        CO.dialogs.closeOnEscape(overlay, close);
+        document.body.appendChild(overlay);
+        overlay.querySelector('.co-btn-cancel').focus();
     }
 
     return { open };

@@ -13,6 +13,9 @@ CO.store = (() => {
     // Al serializar de nuevo un texto JSON, las comillas y barras se escapan (2 bytes) y los
     // caracteres no ASCII pueden ocupar hasta 6 bytes (\uXXXX), así que medimos el coste real.
     const SYNC_CHUNK_BUDGET = 8000;
+    const SYNC_QUOTA = chrome.storage.sync.QUOTA_BYTES || 102400;
+    let quotaWarned = false;
+    let lastSyncErrorAt = 0;
 
     function defaultData() {
         return {
@@ -116,12 +119,37 @@ CO.store = (() => {
                 await chrome.storage.sync.set(chunks);
             } catch (e) {
                 console.error("Classroom Organizer - Error en Sync:", e);
+                notifySyncError();
                 return;
             }
             const all = await chrome.storage.sync.get(null);
             const staleKeys = Object.keys(all).filter(k => k.startsWith(CHUNK_PREFIX) && k !== CHUNK_COUNT_KEY && !(k in chunks));
-            if (staleKeys.length > 0) chrome.storage.sync.remove(staleKeys);
+            if (staleKeys.length > 0) await chrome.storage.sync.remove(staleKeys);
+            checkQuota();
         }, 1000);
+    }
+
+    // Espacio de Chrome Sync en uso (unos 100 KB por extensión)
+    async function usage() {
+        return { bytes: await chrome.storage.sync.getBytesInUse(null), quota: SYNC_QUOTA };
+    }
+
+    // Aviso, una vez por sesión, al pasar del 80 %: si se llena, los cambios dejan de sincronizarse
+    async function checkQuota() {
+        const { bytes, quota } = await usage();
+        const pct = bytes / quota;
+        if (pct < 0.8 || quotaWarned) return;
+        quotaWarned = true;
+        const { t } = CO.i18n;
+        CO.snackbar.show(t('storage_warning', Math.round(pct * 100)), { actionLabel: t('btn_manage_tags'), onAction: () => CO.manageModal.open(), duration: 10000 });
+    }
+
+    // Un fallo al guardar en la nube no puede pasar desapercibido (como mucho un aviso cada 30 s)
+    function notifySyncError() {
+        if (Date.now() - lastSyncErrorAt < 30000) return;
+        lastSyncErrorAt = Date.now();
+        const { t } = CO.i18n;
+        CO.snackbar.show(t('sync_error'), { actionLabel: t('btn_manage_tags'), onAction: () => CO.manageModal.open(), duration: 12000 });
     }
 
     // Cambia los datos mediante una función y guarda
@@ -148,6 +176,7 @@ CO.store = (() => {
     return {
         load,
         update,
+        usage,
         subscribe,
         get data() { return data; }
     };
