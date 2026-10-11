@@ -91,12 +91,17 @@ CO.store = (() => {
     async function load() {
         const syncAll = await chrome.storage.sync.get(null);
         let raw = assembleChunks(syncAll);
-        // En Modo Dev, la caché local es nuestra red de seguridad ante desinstalaciones
+        // En una instalación manual, la copia local es la red de seguridad: si la nube está vacía
+        // (p. ej., tras desinstalar la extensión en otro equipo), se recuperan los datos locales y se
+        // vuelven a subir para que los demás equipos los recuperen también. DISEÑO.md, 5.7.
+        let restoredFromLocal = false;
         if (!raw && IS_DEV_MODE) {
             const { co_data } = await chrome.storage.local.get('co_data');
             raw = co_data || null;
+            restoredFromLocal = !!raw;
         }
         data = normalize(raw);
+        if (restoredFromLocal) save();
         return data;
     }
 

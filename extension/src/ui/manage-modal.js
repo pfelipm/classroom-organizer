@@ -91,6 +91,11 @@ CO.manageModal = (() => {
                         <div class="co-storage-fill"></div>
                     </div>
                 </div>
+                ${isDev ? `
+                <div class="co-dev-warning" role="note">
+                    <span class="co-dev-warning-title">${escapeHTML(t('dev_mode_warning_title'))}</span>
+                    <span>${escapeHTML(t('dev_mode_warning_msg'))}</span>
+                </div>` : ''}
                 <div class="co-modal-footer">
                     ${escapeHTML(t('attribution_created_by'))} <a href="https://www.linkedin.com/in/pfelipm/" target="_blank" rel="noopener">Pablo Felip</a>
                     <span class="co-version">· v${escapeHTML(manifest.version)}${isDev ? ' (dev)' : ''}</span>

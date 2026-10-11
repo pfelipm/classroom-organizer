@@ -98,5 +98,7 @@
   "storage_meter_value": { "message": "$1 KB de $2 KB ($3 %)" },
   "storage_meter_help": { "message": "Espai de Chrome Sync que ocupen les teues etiquetes i la seua assignació a les classes. Chrome permet uns 100 KB per extensió; si s'omple, els canvis deixen de sincronitzar-se." },
   "storage_warning": { "message": "L'emmagatzematge sincronitzat està al $1 %. Si s'omple, els canvis deixaran de sincronitzar-se." },
-  "sync_error": { "message": "No s'han pogut sincronitzar els últims canvis (emmagatzematge ple o error de Chrome Sync). Exporta una còpia de seguretat per no perdre'ls." }
+  "sync_error": { "message": "No s'han pogut sincronitzar els últims canvis (emmagatzematge ple o error de Chrome Sync). Exporta una còpia de seguretat per no perdre'ls." },
+  "dev_mode_warning_title": { "message": "Instal·lació manual (mode de desenvolupament)" },
+  "dev_mode_warning_msg": { "message": "Si desinstal·les l'extensió, les teues etiquetes poden esborrar-se del teu compte de Google. Exporta una còpia de seguretat (botó ↓ de dalt) abans de desinstal·lar-la o de canviar a la versió de la Chrome Web Store." }
 }

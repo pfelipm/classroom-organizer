@@ -98,5 +98,7 @@
   "storage_meter_value": { "message": "$1 KB of $2 KB ($3%)" },
   "storage_meter_help": { "message": "Chrome Sync space used by your tags and their assignment to classes. Chrome allows about 100 KB per extension; if it fills up, changes stop syncing." },
   "storage_warning": { "message": "Synced storage is at $1%. If it fills up, changes will stop syncing." },
-  "sync_error": { "message": "Your latest changes could not be synced (storage full or Chrome Sync error). Export a backup so you don't lose them." }
+  "sync_error": { "message": "Your latest changes could not be synced (storage full or Chrome Sync error). Export a backup so you don't lose them." },
+  "dev_mode_warning_title": { "message": "Manual installation (developer mode)" },
+  "dev_mode_warning_msg": { "message": "If you uninstall the extension, your tags may be deleted from your Google account. Export a backup (↓ button above) before uninstalling it or switching to the Chrome Web Store version." }
 }

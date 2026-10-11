@@ -1348,3 +1348,21 @@ li[data-course-id]:hover .co-tag-add,
     color: var(--co-danger);
     font-weight: 500;
 }
+
+/* Aviso de instalación manual (modo de desarrollo) en el panel de gestión */
+.co-dev-warning {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0 24px 12px;
+    padding: 10px 12px;
+    border-radius: var(--co-radius);
+    background: #fef7e0;
+    color: #5f4300;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.co-dev-warning-title {
+    font-weight: 500;
+}
