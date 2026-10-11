@@ -4,7 +4,7 @@ Extensión de Chrome para **etiquetar, buscar, filtrar, ordenar y agrupar** las 
 
 Es la extensión hermana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer).
 
-> 🚧 **En desarrollo (v0.2.0).** Ya permite etiquetar clases (con colores, prioritarias y panel de gestión) y ordenar la vista por nombre. Próximamente: búsqueda, filtros y etiquetado múltiple.
+> 🚧 **En desarrollo (v0.3.0).** Ya permite etiquetar clases (con colores, prioritarias y panel de gestión), buscarlas, filtrarlas por etiquetas (Y/O) y ordenar la vista por nombre. Próximamente: etiquetado múltiple, copias de seguridad y agrupación.
 
 ## 🔒 Privacidad
 
@@ -36,7 +36,7 @@ extension/
     │   └── adapter.js       ÚNICO módulo que conoce la página de Classroom (selectores)
     ├── features/
     │   ├── view-order.js    Orden de la vista con CSS order (tarjetas y panel lateral)
-    │   └── drag-lock.js     Bloqueo del arrastre y de «Mover»
+    │   ├── drag-lock.js     Bloqueo del arrastre y de «Mover»
     ├── ui/
     │   ├── icons.js         Iconos Material en línea
     │   ├── dialogs.js       Superposición, confirmación, cierre con Escape

@@ -5,7 +5,7 @@
   "sort_classroom": { "message": "Ordre de Classroom" },
   "sort_az": { "message": "Nom (A-Z)" },
   "sort_za": { "message": "Nom (Z-A)" },
-  "drag_locked_hint": { "message": "Torna a «Ordre de Classroom» per a reorganitzar les classes manualment." },
+  "drag_locked_hint": { "message": "Per a reorganitzar les classes manualment, torna a «Ordre de Classroom» i lleva la cerca i els filtres." },
   "btn_manage_tags": { "message": "Gestionar etiquetes" },
   "modal_manage_title": { "message": "Gestionar etiquetes" },
   "modal_close": { "message": "Tanca" },
@@ -50,5 +50,14 @@
   "lang_es": { "message": "Espanyol" },
   "lang_en": { "message": "Anglès" },
   "lang_ca": { "message": "Català" },
-  "attribution_created_by": { "message": "Creat amb 🩵 per" }
+  "attribution_created_by": { "message": "Creat amb 🩵 per" },
+  "search_placeholder": { "message": "Cerca classes o etiquetes..." },
+  "filter_group_label": { "message": "Filtra per etiquetes" },
+  "filter_mode_and": { "message": "I" },
+  "filter_mode_or": { "message": "O" },
+  "filter_mode_and_hint": { "message": "Classes amb totes les etiquetes seleccionades" },
+  "filter_mode_or_hint": { "message": "Classes amb alguna de les etiquetes seleccionades" },
+  "filter_clear": { "message": "Neteja els filtres" },
+  "filter_count": { "message": "$1 de $2 classes" },
+  "filter_no_results": { "message": "Cap classe coincideix amb la cerca o els filtres." }
 }

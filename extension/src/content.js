@@ -3,7 +3,7 @@
 var CO = globalThis.CO || (globalThis.CO = {});
 
 (() => {
-    const { store, adapter, viewOrder, dragLock, toolbar, cardTags } = CO;
+    const { store, adapter, viewOrder, dragLock, filters, toolbar, cardTags } = CO;
     let refreshTimer = null;
     let resizeTimer = null;
     let observer = null;
@@ -21,10 +21,15 @@ var CO = globalThis.CO || (globalThis.CO = {});
             const view = store.data.view;
             const list = adapter.activeView() !== null ? adapter.cardList() : null;
             if (list) {
-                toolbar.render(toolbar.ensure(setSort), view);
-                cardTags.renderAll(adapter.cards(list));
+                const cards = adapter.cards(list);
+                // Primero se filtra: las etiquetas solo se pueden ajustar en tarjetas visibles
+                const result = filters.apply(cards);
+                cardTags.renderAll(cards);
                 viewOrder.apply(view.sortWithin);
-                dragLock.set(view.sortWithin !== 'classroom');
+                // Con la vista ordenada o filtrada, reordenar a mano daría resultados inesperados
+                const locked = view.sortWithin !== 'classroom' || filters.isFiltering();
+                toolbar.render(toolbar.ensure(setSort), view, result, locked);
+                dragLock.set(locked);
             } else {
                 toolbar.remove();
                 dragLock.set(false);
@@ -58,6 +63,7 @@ var CO = globalThis.CO || (globalThis.CO = {});
             if (data.settings.lang !== CO.i18n.lang()) await CO.i18n.setLanguage(data.settings.lang);
             scheduleRefresh();
         });
+        filters.onChange(scheduleRefresh);
         window.addEventListener('popstate', scheduleRefresh);
         window.addEventListener('resize', onResize);
         refresh();

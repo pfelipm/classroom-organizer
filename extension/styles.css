@@ -38,12 +38,176 @@
 /* ===================== Barra de la extensión ===================== */
 .co-toolbar {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 0 16px;
+    font-size: 14px;
+    color: var(--co-text);
+}
+
+.co-toolbar-row {
+    display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 16px;
-    margin: 0 0 12px;
-    font-size: 14px;
+}
+
+/* Búsqueda */
+.co-search {
+    position: relative;
+    flex: 1 1 240px;
+    display: flex;
+    align-items: center;
+}
+
+.co-search-icon {
+    position: absolute;
+    left: 12px;
+    display: flex;
+    color: var(--co-text-muted);
+    pointer-events: none;
+}
+
+.co-search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 16px 8px 40px;
+    border: 1px solid var(--co-border);
+    border-radius: 20px;
+    outline: none;
+    background: var(--co-surface);
     color: var(--co-text);
+    font: inherit;
+    font-size: 14px;
+}
+
+.co-search-input:focus {
+    border-color: var(--co-primary);
+    box-shadow: 0 0 0 1px var(--co-primary);
+}
+
+/* Filtros por etiqueta */
+.co-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.co-filter-row[hidden] {
+    display: none;
+}
+
+.co-filter-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border: 1px solid var(--co-border);
+    border-radius: 16px;
+    background: var(--co-surface);
+    color: var(--co-text);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Punto con el color de la etiqueta mientras no está activa */
+.co-filter-tag:not(.active)::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--co-dot);
+}
+
+.co-filter-tag:not(.active):hover {
+    background: var(--co-hover);
+    border-color: var(--co-primary);
+}
+
+.co-filter-tag.active {
+    box-shadow: var(--co-shadow-md);
+}
+
+.co-filter-tag.active:hover {
+    filter: brightness(0.92);
+}
+
+/* Selector Y/O (solo con dos o más etiquetas activas) */
+.co-filter-mode {
+    display: flex;
+    padding: 2px;
+    border: 1px solid var(--co-border);
+    border-radius: 16px;
+    background: var(--co-surface-3);
+}
+
+.co-mode-btn {
+    padding: 2px 10px;
+    border: none;
+    border-radius: 14px;
+    background: none;
+    color: var(--co-text-muted);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.co-mode-btn.active {
+    background: var(--co-surface);
+    color: var(--co-primary);
+    box-shadow: var(--co-shadow-sm);
+}
+
+.co-clear-filters {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    background: none;
+    color: var(--co-primary);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.co-clear-filters:hover {
+    background: var(--co-hover);
+}
+
+.co-clear-filters span {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.co-filter-count {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--co-text-muted);
+}
+
+/* Tarjetas que no coinciden con la búsqueda o los filtros */
+li[data-course-id].co-filtered-out {
+    display: none !important;
+}
+
+.co-empty {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 32px 16px;
+    font-family: var(--co-font);
+    font-size: 14px;
+    color: var(--co-text-muted);
 }
 
 .co-sort {
@@ -113,6 +277,13 @@ nav [role="group"].co-sorted {
    Abajo del cuerpo de la tarjeta, a todo el ancho y alineadas con el nombre de la clase */
 .co-card-body {
     position: relative;
+}
+
+/* El trabajo pendiente que Classroom muestra en el cuerpo ya se recorta (overflow: hidden) a unos
+   120 px; con etiquetas, recortamos antes para que nunca asome por debajo de ellas */
+.co-card-body:has(> .co-tag-container.co-has-tags) > :not(.co-tag-container) {
+    max-height: calc(100% - 32px) !important;
+    box-sizing: border-box;
 }
 
 .co-tag-container {

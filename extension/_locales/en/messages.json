@@ -5,7 +5,7 @@
   "sort_classroom": { "message": "Classroom order" },
   "sort_az": { "message": "Name (A-Z)" },
   "sort_za": { "message": "Name (Z-A)" },
-  "drag_locked_hint": { "message": "Switch back to “Classroom order” to rearrange classes manually." },
+  "drag_locked_hint": { "message": "To rearrange classes manually, switch back to “Classroom order” and clear the search and filters." },
   "btn_manage_tags": { "message": "Manage tags" },
   "modal_manage_title": { "message": "Manage tags" },
   "modal_close": { "message": "Close" },
@@ -50,5 +50,14 @@
   "lang_es": { "message": "Spanish" },
   "lang_en": { "message": "English" },
   "lang_ca": { "message": "Catalan" },
-  "attribution_created_by": { "message": "Created with 🩵 by" }
+  "attribution_created_by": { "message": "Created with 🩵 by" },
+  "search_placeholder": { "message": "Search classes or tags..." },
+  "filter_group_label": { "message": "Filter by tags" },
+  "filter_mode_and": { "message": "AND" },
+  "filter_mode_or": { "message": "OR" },
+  "filter_mode_and_hint": { "message": "Classes with all the selected tags" },
+  "filter_mode_or_hint": { "message": "Classes with any of the selected tags" },
+  "filter_clear": { "message": "Clear filters" },
+  "filter_count": { "message": "$1 of $2 classes" },
+  "filter_no_results": { "message": "No classes match the search or filters." }
 }

@@ -5,7 +5,7 @@
   "sort_classroom": { "message": "Orden de Classroom" },
   "sort_az": { "message": "Nombre (A-Z)" },
   "sort_za": { "message": "Nombre (Z-A)" },
-  "drag_locked_hint": { "message": "Vuelve a «Orden de Classroom» para reorganizar las clases manualmente." },
+  "drag_locked_hint": { "message": "Para reorganizar las clases manualmente, vuelve a «Orden de Classroom» y quita la búsqueda y los filtros." },
   "btn_manage_tags": { "message": "Gestionar etiquetas" },
   "modal_manage_title": { "message": "Gestionar etiquetas" },
   "modal_close": { "message": "Cerrar" },
@@ -50,5 +50,14 @@
   "lang_es": { "message": "Español" },
   "lang_en": { "message": "Inglés" },
   "lang_ca": { "message": "Catalán" },
-  "attribution_created_by": { "message": "Creado con 🩵 por" }
+  "attribution_created_by": { "message": "Creado con 🩵 por" },
+  "search_placeholder": { "message": "Buscar clases o etiquetas..." },
+  "filter_group_label": { "message": "Filtrar por etiquetas" },
+  "filter_mode_and": { "message": "Y" },
+  "filter_mode_or": { "message": "O" },
+  "filter_mode_and_hint": { "message": "Clases con todas las etiquetas seleccionadas" },
+  "filter_mode_or_hint": { "message": "Clases con alguna de las etiquetas seleccionadas" },
+  "filter_clear": { "message": "Limpiar filtros" },
+  "filter_count": { "message": "$1 de $2 clases" },
+  "filter_no_results": { "message": "Ninguna clase coincide con la búsqueda o los filtros." }
 }
