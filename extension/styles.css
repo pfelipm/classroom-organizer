@@ -328,6 +328,13 @@ li[data-course-id]:hover .co-tag-add,
     opacity: 1;
 }
 
+/* En pantallas táctiles no hay «pasar por encima»: el botón se ve siempre */
+@media (hover: none) {
+    .co-tag-add {
+        opacity: 1;
+    }
+}
+
 .co-tag-add:hover {
     background: var(--co-surface-3);
     color: var(--co-primary);
@@ -362,7 +369,8 @@ li[data-course-id]:hover .co-tag-add,
     text-overflow: ellipsis;
 }
 
-/* Botón para quitar la etiqueta */
+/* Botón para quitar la etiqueta: siempre visible, como en NotebookLM Organizer (también se
+   puede usar en pantallas táctiles, donde no hay «pasar por encima») */
 .co-tag-remove {
     display: flex;
     align-items: center;
@@ -387,37 +395,6 @@ li[data-course-id]:hover .co-tag-add,
 .co-tag-remove:hover {
     opacity: 1;
     background: color-mix(in srgb, currentColor 20%, transparent);
-}
-
-/* En la tarjeta, el espacio es escaso: la × aparece al pasar por encima, superpuesta al final de
-   la etiqueta (con su mismo color de fondo) para no cambiar su ancho ni mover las demás.
-   En la lista completa se ve siempre. */
-.co-tag-container .co-tag {
-    position: relative;
-}
-
-.co-tag-container .co-tag-remove {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 20px;
-    height: 100%;
-    margin: 0;
-    border-radius: 0 12px 12px 0;
-    background: inherit;
-    opacity: 0;
-    pointer-events: none;
-}
-
-.co-tag-container .co-tag:hover .co-tag-remove,
-.co-tag-container .co-tag-remove:focus-visible {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.co-tag-container .co-tag-remove:hover {
-    background: inherit;
-    filter: brightness(0.9);
 }
 
 .co-more-tags {
