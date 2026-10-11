@@ -3,23 +3,45 @@
    van en variables para poder añadir otro tema sin tocar las reglas. */
 
 :root {
+    --co-primary: #0b57d0;
     --co-text: #1f1f1f;
     --co-text-muted: #444746;
     --co-surface: #ffffff;
+    --co-surface-2: #f8fafd;
+    --co-surface-3: #f0f4f9;
     --co-border: #c4c7c5;
-    --co-accent: #0b57d0;
+    --co-hover: rgba(11, 87, 208, 0.06);
+    --co-checked-bg: #d3e3fd;
+    --co-danger: #b3261e;
+    --co-danger-hover-bg: #f9dedc;
+    --co-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.12);
+    --co-shadow-md: 0 1px 3px rgba(0, 0, 0, 0.25);
+    --co-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.2);
+    --co-shadow-modal: 0 24px 38px 3px rgba(0, 0, 0, 0.14);
     --co-radius: 8px;
     --co-font: "Google Sans Text", "Google Sans", Roboto, Arial, sans-serif;
 }
 
-/* --- Barra de la extensión --- */
+.co-toolbar, .co-tag-container, .co-tags-tooltip, .co-modal-overlay {
+    font-family: var(--co-font);
+}
+
+/* Foco visible para quien navega con teclado */
+.co-toolbar :focus-visible,
+.co-tag-container :focus-visible,
+.co-tags-tooltip :focus-visible,
+.co-modal-overlay :focus-visible {
+    outline: 2px solid var(--co-primary);
+    outline-offset: 2px;
+}
+
+/* ===================== Barra de la extensión ===================== */
 .co-toolbar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 8px 16px;
     margin: 0 0 12px;
-    font-family: var(--co-font);
     font-size: 14px;
     color: var(--co-text);
 }
@@ -44,28 +66,802 @@
     cursor: pointer;
 }
 
-.co-sort-select:focus-visible {
-    outline: 2px solid var(--co-accent);
-    outline-offset: 1px;
-}
-
 .co-lock-hint {
     color: var(--co-text-muted);
     font-size: 12px;
 }
 
-/* --- Orden de la vista ---
+.co-manage-btn {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--co-surface);
+    border: 1px solid var(--co-border);
+    padding: 6px 16px 6px 12px;
+    border-radius: 18px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--co-primary);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.co-manage-btn:hover {
+    background: var(--co-hover);
+    border-color: var(--co-primary);
+}
+
+/* ===================== Orden de la vista =====================
    Las tarjetas ya están en un flex; el grupo del panel lateral es un bloque y lo convertimos */
 nav [role="group"].co-sorted {
     display: flex;
     flex-direction: column;
 }
 
-/* --- Reordenación nativa bloqueada --- */
+/* ===================== Reordenación nativa bloqueada ===================== */
 .co-drag-locked li[data-course-id] {
     user-select: none;
 }
 
 .co-hidden-move {
     display: none !important;
+}
+
+/* ===================== Etiquetas en las tarjetas =====================
+   Abajo del cuerpo de la tarjeta, a todo el ancho y alineadas con el nombre de la clase */
+.co-card-body {
+    position: relative;
+}
+
+.co-tag-container {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    overflow: hidden;
+}
+
+.co-tag-list {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+/* Botón de etiquetar: en la fila inferior, a la izquierda de los iconos de Classroom */
+.co-tag-add {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: auto;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--co-text-muted);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s, background 0.15s;
+}
+
+li[data-course-id]:hover .co-tag-add,
+.co-tag-add:focus-visible {
+    opacity: 1;
+}
+
+.co-tag-add:hover {
+    background: var(--co-surface-3);
+    color: var(--co-primary);
+}
+
+.co-tag {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 20px;
+    max-width: 120px;
+    padding: 0 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+    box-shadow: var(--co-shadow-sm);
+    user-select: none;
+    cursor: default;
+    flex-shrink: 0;
+}
+
+.co-tag[hidden],
+.co-more-tags[hidden] {
+    display: none;
+}
+
+.co-tag-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Botón para quitar la etiqueta: aparece al pasar por encima */
+.co-tag-remove {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    margin: 0 -4px 0 4px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: inherit;
+    font: inherit;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+    opacity: 0.75;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.co-tag:hover .co-tag-remove,
+.co-tag-remove:focus-visible {
+    display: flex;
+}
+
+.co-tag-remove:hover {
+    opacity: 1;
+    background: color-mix(in srgb, currentColor 20%, transparent);
+}
+
+.co-more-tags {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    height: 20px;
+    padding: 0 8px;
+    border: 1px solid var(--co-border);
+    border-radius: 12px;
+    background: var(--co-surface-3);
+    color: var(--co-text-muted);
+    font: inherit;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.co-more-tags:hover {
+    background: var(--co-checked-bg);
+    border-color: var(--co-primary);
+    color: var(--co-primary);
+}
+
+/* Lista completa de etiquetas de una clase */
+.co-tags-tooltip {
+    position: fixed;
+    z-index: 10000;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 280px;
+    padding: 12px;
+    background: var(--co-surface);
+    border: 1px solid var(--co-border);
+    border-radius: var(--co-radius);
+    box-shadow: var(--co-shadow-lg);
+}
+
+.co-tags-tooltip .co-tag {
+    max-width: 100%;
+}
+
+/* ===================== Diálogos ===================== */
+.co-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: var(--co-text);
+}
+
+.co-modal-overlay-top {
+    z-index: 30000;
+}
+
+.co-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    border: none;
+    border-radius: 50%;
+    background: none;
+    color: var(--co-text-muted);
+    cursor: pointer;
+}
+
+.co-btn-icon:hover {
+    background: var(--co-surface-3);
+    color: var(--co-text);
+}
+
+.co-btn-icon.danger:hover {
+    background: var(--co-danger-hover-bg);
+    color: var(--co-danger);
+}
+
+.co-btn-primary,
+.co-btn-danger,
+.co-btn-cancel {
+    padding: 8px 16px;
+    border-radius: 18px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.co-btn-primary {
+    border: none;
+    background: var(--co-primary);
+    color: #ffffff;
+}
+
+.co-btn-danger {
+    border: none;
+    background: var(--co-danger);
+    color: #ffffff;
+}
+
+.co-btn-primary:hover,
+.co-btn-danger:hover {
+    filter: brightness(0.9);
+}
+
+.co-btn-cancel {
+    border: 1px solid var(--co-border);
+    background: var(--co-surface);
+    color: var(--co-text-muted);
+}
+
+.co-btn-cancel:hover {
+    background: var(--co-surface-3);
+}
+
+/* Confirmación */
+.co-confirm-modal {
+    width: 360px;
+    padding: 24px;
+    background: var(--co-surface);
+    border-radius: 12px;
+    box-shadow: var(--co-shadow-modal);
+    text-align: center;
+}
+
+.co-confirm-title {
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.co-confirm-message {
+    margin-bottom: 24px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--co-text-muted);
+}
+
+.co-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* ===================== Ventana de etiquetado ===================== */
+.co-popover {
+    display: flex;
+    flex-direction: column;
+    width: 280px;
+    max-height: 70vh;
+    overflow: hidden;
+    background: var(--co-surface);
+    border: 1px solid var(--co-border);
+    border-radius: 12px;
+    box-shadow: var(--co-shadow-lg);
+}
+
+.co-popover-header {
+    padding: 12px;
+    background: var(--co-surface-2);
+    border-bottom: 1px solid var(--co-surface-3);
+}
+
+.co-popover-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.co-popover-title {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.co-popover-input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--co-border);
+    border-radius: 6px;
+    outline: none;
+    background: var(--co-surface);
+    color: var(--co-text);
+    font: inherit;
+    font-size: 14px;
+}
+
+.co-popover-input:focus {
+    border-color: var(--co-primary);
+    box-shadow: 0 0 0 1px var(--co-primary);
+}
+
+.co-popover-list {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+.co-check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.co-check-item:hover {
+    background: var(--co-hover);
+}
+
+.co-check-item.checked {
+    background: var(--co-checked-bg);
+}
+
+.co-check-item .co-tag {
+    max-width: 180px;
+    cursor: pointer;
+}
+
+.co-check-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--co-text-muted);
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.co-check-icon::after {
+    content: '✓';
+    display: none;
+    font-size: 12px;
+}
+
+.co-check-item.checked .co-check-icon::after {
+    display: block;
+}
+
+/* Estado parcial: algunas de las clases tienen la etiqueta */
+.co-check-item.mixed .co-check-icon::after {
+    content: '–';
+    display: block;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.co-check-partial {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--co-text-muted);
+}
+
+.co-create-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-top: 1px solid var(--co-surface-3);
+    background: none;
+    color: var(--co-primary);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+}
+
+.co-create-option:hover {
+    background: var(--co-checked-bg);
+}
+
+/* ===================== Panel de gestión ===================== */
+.co-modal {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    max-width: calc(100vw - 32px);
+    max-height: 85vh;
+    overflow: hidden;
+    background: var(--co-surface);
+    border-radius: 12px;
+    box-shadow: var(--co-shadow-modal);
+}
+
+.co-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    background: var(--co-surface-2);
+    border-bottom: 1px solid var(--co-surface-3);
+}
+
+.co-modal-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.co-modal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.co-modal-body {
+    overflow-y: auto;
+}
+
+.co-modal-footer {
+    padding: 12px 24px;
+    border-top: 1px solid var(--co-border);
+    font-size: 11px;
+    text-align: center;
+    color: var(--co-text-muted);
+}
+
+.co-modal-footer a {
+    color: var(--co-primary);
+    text-decoration: none;
+}
+
+.co-modal-footer a:hover {
+    text-decoration: underline;
+}
+
+.co-version {
+    opacity: 0.75;
+    white-space: nowrap;
+}
+
+/* Selector de idioma */
+.co-lang-selector {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: var(--co-surface-3);
+    border: 1px solid var(--co-border);
+    border-radius: 12px;
+}
+
+.co-lang-opt {
+    padding: 0 2px;
+    border: none;
+    background: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--co-text-muted);
+    opacity: 0.45;
+    cursor: pointer;
+}
+
+.co-lang-opt:hover,
+.co-lang-opt.active {
+    opacity: 1;
+    color: var(--co-primary);
+}
+
+.co-lang-opt.active {
+    font-weight: bold;
+}
+
+/* Crear */
+.co-manage-create-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 24px;
+    background: var(--co-surface-2);
+    border-bottom: 2px solid var(--co-surface-3);
+}
+
+.co-manage-create-fields {
+    display: flex;
+    gap: 12px;
+}
+
+.co-manage-create-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--co-border);
+    border-radius: var(--co-radius);
+    outline: none;
+    background: var(--co-surface);
+    color: var(--co-text);
+    font: inherit;
+    font-size: 14px;
+}
+
+.co-manage-create-input:focus {
+    border-color: var(--co-primary);
+}
+
+.co-field-error {
+    margin: 2px 0 0 28px;
+    font-size: 12px;
+    color: var(--co-danger);
+}
+
+.co-manage-create-row .co-field-error {
+    margin: 0;
+}
+
+/* Filtro (con muchas etiquetas) */
+.co-manage-filter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 24px;
+    border-bottom: 1px solid var(--co-surface-3);
+    color: var(--co-text-muted);
+}
+
+.co-manage-filter-row[hidden] {
+    display: none;
+}
+
+.co-filter-icon {
+    display: flex;
+}
+
+.co-manage-filter-input {
+    flex: 1;
+    padding: 4px 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--co-text);
+    font: inherit;
+    font-size: 13px;
+}
+
+/* Lista */
+.co-manage-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.co-manage-empty {
+    padding: 24px;
+    font-size: 13px;
+    text-align: center;
+    color: var(--co-text-muted);
+}
+
+.co-manage-item {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 16px 6px 24px;
+    border-bottom: 1px solid var(--co-surface-3);
+}
+
+.co-manage-item:hover {
+    background: var(--co-surface-2);
+}
+
+@keyframes co-flash-highlight {
+    0% { background-color: rgba(24, 128, 56, 0.2); }
+    100% { background-color: transparent; }
+}
+
+.co-manage-item.newly-created {
+    animation: co-flash-highlight 2s ease-out;
+}
+
+.co-manage-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.co-color-dot {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: 2px solid var(--co-surface);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--co-border);
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.co-color-dot:hover,
+.co-color-dot[aria-expanded="true"] {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px var(--co-primary);
+}
+
+.co-tag-name-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+}
+
+.co-tag-edit-input {
+    flex: 1;
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 4px 28px 4px 8px; /* Hueco para el lápiz */
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--co-text);
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: text;
+}
+
+.co-tag-edit-input:hover {
+    border-color: var(--co-border);
+    background: var(--co-surface);
+}
+
+.co-tag-edit-input:focus {
+    border-color: var(--co-primary);
+    background: var(--co-surface);
+    outline: none;
+}
+
+/* Lápiz: indica que el nombre se puede editar; más visible al pasar por la fila */
+.co-edit-icon {
+    position: absolute;
+    right: 8px;
+    display: flex;
+    color: var(--co-text-muted);
+    opacity: 0.35;
+    cursor: text;
+}
+
+.co-manage-item:hover .co-edit-icon {
+    opacity: 0.8;
+}
+
+.co-tag-edit-input:focus + .co-edit-icon {
+    opacity: 0;
+}
+
+.co-tag-count {
+    flex-shrink: 0;
+    min-width: 72px; /* Ancho fijo: botones alineados en todas las filas */
+    font-size: 12px;
+    text-align: right;
+    white-space: nowrap;
+    color: var(--co-text-muted);
+}
+
+/* Paleta de colores */
+.co-color-picker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.co-manage-item .co-color-picker {
+    margin: 4px 0 6px 28px;
+}
+
+.co-color-swatch {
+    box-sizing: content-box;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    appearance: none;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.co-color-swatch:hover {
+    transform: scale(1.2);
+}
+
+.co-color-swatch.active {
+    border-color: var(--co-text);
+    box-shadow: inset 0 0 0 2px var(--co-surface);
+    transform: scale(1.1);
+}
+
+.co-color-swatch.active::after {
+    content: '✓';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 12px;
+    color: var(--co-on, #ffffff); /* Blanco u oscuro según el color de fondo */
+}
+
+.co-custom-color-btn {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px; /* Mismo tamaño exterior que .co-color-swatch */
+    height: 24px;
+    overflow: hidden;
+    border: 1px dashed var(--co-border);
+    border-radius: 50%;
+    font-size: 12px;
+    color: var(--co-text-muted);
+    cursor: pointer;
+}
+
+.co-custom-color-btn.active {
+    border: 2px solid var(--co-text);
+}
+
+.co-custom-color-btn:focus-within {
+    outline: 2px solid var(--co-primary);
+    outline-offset: 2px;
+}
+
+.co-custom-color-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
 }

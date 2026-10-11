@@ -5,16 +5,9 @@ var CO = globalThis.CO || (globalThis.CO = {});
 
 CO.viewOrder = (() => {
     const SORTED_CLASS = 'co-sorted';
-    let collator = null;
-
-    // Orden natural según el idioma: «2º ESO» antes que «10º», sin distinguir acentos ni mayúsculas
-    function compareNames(a, b) {
-        if (!collator) collator = new Intl.Collator(CO.i18n.locale(), { numeric: true, sensitivity: 'base' });
-        return collator.compare(a, b);
-    }
 
     function sortedIds(items, mode) {
-        const sorted = [...items].sort((a, b) => compareNames(a.name, b.name));
+        const sorted = [...items].sort((a, b) => CO.i18n.compare(a.name, b.name));
         if (mode === 'za') sorted.reverse();
         return sorted.map(item => item.id);
     }
@@ -58,5 +51,5 @@ CO.viewOrder = (() => {
         });
     }
 
-    return { apply, compareNames };
+    return { apply };
 })();

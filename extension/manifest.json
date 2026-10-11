@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "__MSG_extDesc__",
   "default_locale": "en",
   "permissions": [
@@ -30,9 +30,15 @@
       "js": [
         "src/core/i18n.js",
         "src/core/store.js",
+        "src/core/tags.js",
         "src/classroom/adapter.js",
         "src/features/view-order.js",
         "src/features/drag-lock.js",
+        "src/ui/icons.js",
+        "src/ui/dialogs.js",
+        "src/ui/card-tags.js",
+        "src/ui/tag-popover.js",
+        "src/ui/manage-modal.js",
         "src/ui/toolbar.js",
         "src/content.js"
       ],

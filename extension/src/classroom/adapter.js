@@ -62,6 +62,19 @@ CO.adapter = (() => {
         return (link?.firstElementChild || link)?.textContent.trim() || '';
     }
 
+    // La tarjeta tiene tres partes: cabecera (nombre), cuerpo (trabajo pendiente) y fila inferior
+    // (iconos de Classroom, el último hijo). DISEÑO.md, sección 7.2.
+    function cardFooter(card) {
+        const footer = card.lastElementChild;
+        return footer?.querySelector('button, [role="button"]') ? footer : null;
+    }
+
+    function cardBody(card) {
+        const footer = cardFooter(card);
+        const body = footer?.previousElementSibling;
+        return body && body !== card.firstElementChild ? body : null;
+    }
+
     function dragContainer(list = cardList()) {
         return list?.closest(SEL.dragContainer) || null;
     }
@@ -97,6 +110,8 @@ CO.adapter = (() => {
         activeView,
         cardList,
         cards,
+        cardBody,
+        cardFooter,
         courseId,
         courseName,
         courseRole,

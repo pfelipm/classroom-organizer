@@ -1,5 +1,5 @@
 // Classroom Organizer - Barra de la extensión sobre la lista de clases
-// Primera versión: solo el selector de orden. Aquí irán la búsqueda, los filtros y la selección.
+// Orden de la vista y gestión de etiquetas. Aquí irán la búsqueda, los filtros y la selección.
 
 var CO = globalThis.CO || (globalThis.CO = {});
 
@@ -16,6 +16,7 @@ CO.toolbar = (() => {
         const bar = document.createElement('div');
         bar.id = TOOLBAR_ID;
         bar.className = 'co-toolbar';
+        bar.dataset.lang = CO.store.data.settings.lang;
         bar.innerHTML = `
             <label class="co-sort">
                 <span class="co-sort-label">${escapeHTML(t('sort_label'))}</span>
@@ -23,8 +24,12 @@ CO.toolbar = (() => {
                     ${SORT_OPTIONS.map(([value, key]) => `<option value="${value}">${escapeHTML(t(key))}</option>`).join('')}
                 </select>
             </label>
-            <span class="co-lock-hint" hidden>${escapeHTML(t('drag_locked_hint'))}</span>`;
+            <span class="co-lock-hint" hidden>${escapeHTML(t('drag_locked_hint'))}</span>
+            <button type="button" class="co-manage-btn">${CO.icons.icon('label', 18)}<span>${escapeHTML(t('btn_manage_tags'))}</span></button>`;
         bar.querySelector('.co-sort-select').addEventListener('change', e => onSortChange(e.target.value));
+        bar.querySelector('.co-manage-btn').onclick = () => CO.manageModal.open();
+        // Que nuestros clics y teclas no lleguen a Classroom
+        ['click', 'pointerdown', 'mousedown', 'keydown'].forEach(type => bar.addEventListener(type, e => e.stopPropagation()));
         return bar;
     }
 
@@ -35,6 +40,11 @@ CO.toolbar = (() => {
         if (!anchor) {
             bar?.remove();
             return null;
+        }
+        // Al cambiar el idioma se rehace con los textos nuevos
+        if (bar && bar.dataset.lang !== CO.store.data.settings.lang) {
+            bar.remove();
+            bar = null;
         }
         if (!bar) bar = build(onSortChange);
         if (bar.nextElementSibling !== anchor) anchor.before(bar);

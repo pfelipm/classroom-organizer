@@ -6,6 +6,7 @@ var CO = globalThis.CO || (globalThis.CO = {});
 CO.i18n = (() => {
     let uiLang = 'auto'; // 'auto', 'es', 'en', 'ca'
     let overriddenMessages = null; // Caché de traducciones cuando se fuerza un idioma
+    let collator = null; // Depende del idioma: se recrea al cambiarlo
 
     function t(key, ...args) {
         let msg = "";
@@ -23,6 +24,7 @@ CO.i18n = (() => {
 
     async function setLanguage(lang) {
         uiLang = lang || 'auto';
+        collator = null;
         if (uiLang === 'auto') {
             overriddenMessages = null;
             return;
@@ -43,9 +45,20 @@ CO.i18n = (() => {
         return uiLang === 'auto' ? chrome.i18n.getUILanguage() : uiLang;
     }
 
+    // Orden natural según el idioma: «2º ESO» antes que «10º», sin distinguir acentos ni mayúsculas
+    function compare(a, b) {
+        if (!collator) collator = new Intl.Collator(locale(), { numeric: true, sensitivity: 'base' });
+        return collator.compare(a, b);
+    }
+
+    // Texto normalizado para buscar: sin mayúsculas ni acentos
+    function normalize(str) {
+        return String(str || '').toLocaleLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+    }
+
     function escapeHTML(str) {
         return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
     }
 
-    return { t, setLanguage, locale, escapeHTML };
+    return { t, setLanguage, lang: () => uiLang, locale, compare, normalize, escapeHTML };
 })();
