@@ -59,5 +59,21 @@
   "filter_mode_or_hint": { "message": "Clases con alguna de las etiquetas seleccionadas" },
   "filter_clear": { "message": "Limpiar filtros" },
   "filter_count": { "message": "$1 de $2 clases" },
-  "filter_no_results": { "message": "Ninguna clase coincide con la búsqueda o los filtros." }
+  "filter_no_results": { "message": "Ninguna clase coincide con la búsqueda o los filtros." },
+  "btn_select": { "message": "Seleccionar" },
+  "btn_select_cancel": { "message": "Cancelar selección" },
+  "selection_count_zero": { "message": "Ninguna clase seleccionada" },
+  "selection_count_one": { "message": "1 clase seleccionada" },
+  "selection_count_other": { "message": "$1 clases seleccionadas" },
+  "selection_hint": { "message": "Clic para seleccionar · Mayús+clic para un rango · Esc para salir" },
+  "selection_checkbox_label": { "message": "Seleccionar clase" },
+  "btn_select_visible": { "message": "Seleccionar visibles" },
+  "btn_deselect_all": { "message": "Deseleccionar todo" },
+  "btn_tag_selected": { "message": "Etiquetar" },
+  "btn_exit_selection": { "message": "Salir del modo selección" },
+  "undo_tag_added_one": { "message": "Etiqueta «$1» aplicada a 1 clase" },
+  "undo_tag_added_other": { "message": "Etiqueta «$1» aplicada a $2 clases" },
+  "undo_tag_removed_one": { "message": "Etiqueta «$1» quitada de 1 clase" },
+  "undo_tag_removed_other": { "message": "Etiqueta «$1» quitada de $2 clases" },
+  "undo_action": { "message": "Deshacer" }
 }

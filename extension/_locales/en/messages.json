@@ -59,5 +59,21 @@
   "filter_mode_or_hint": { "message": "Classes with any of the selected tags" },
   "filter_clear": { "message": "Clear filters" },
   "filter_count": { "message": "$1 of $2 classes" },
-  "filter_no_results": { "message": "No classes match the search or filters." }
+  "filter_no_results": { "message": "No classes match the search or filters." },
+  "btn_select": { "message": "Select" },
+  "btn_select_cancel": { "message": "Cancel selection" },
+  "selection_count_zero": { "message": "No classes selected" },
+  "selection_count_one": { "message": "1 class selected" },
+  "selection_count_other": { "message": "$1 classes selected" },
+  "selection_hint": { "message": "Click to select · Shift+click for a range · Esc to exit" },
+  "selection_checkbox_label": { "message": "Select class" },
+  "btn_select_visible": { "message": "Select visible" },
+  "btn_deselect_all": { "message": "Deselect all" },
+  "btn_tag_selected": { "message": "Tag" },
+  "btn_exit_selection": { "message": "Exit selection mode" },
+  "undo_tag_added_one": { "message": "Tag “$1” added to 1 class" },
+  "undo_tag_added_other": { "message": "Tag “$1” added to $2 classes" },
+  "undo_tag_removed_one": { "message": "Tag “$1” removed from 1 class" },
+  "undo_tag_removed_other": { "message": "Tag “$1” removed from $2 classes" },
+  "undo_action": { "message": "Undo" }
 }

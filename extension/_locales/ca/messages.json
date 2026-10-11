@@ -59,5 +59,21 @@
   "filter_mode_or_hint": { "message": "Classes amb alguna de les etiquetes seleccionades" },
   "filter_clear": { "message": "Neteja els filtres" },
   "filter_count": { "message": "$1 de $2 classes" },
-  "filter_no_results": { "message": "Cap classe coincideix amb la cerca o els filtres." }
+  "filter_no_results": { "message": "Cap classe coincideix amb la cerca o els filtres." },
+  "btn_select": { "message": "Selecciona" },
+  "btn_select_cancel": { "message": "Cancel·la la selecció" },
+  "selection_count_zero": { "message": "Cap classe seleccionada" },
+  "selection_count_one": { "message": "1 classe seleccionada" },
+  "selection_count_other": { "message": "$1 classes seleccionades" },
+  "selection_hint": { "message": "Clic per seleccionar · Maj+clic per a un interval · Esc per sortir" },
+  "selection_checkbox_label": { "message": "Selecciona la classe" },
+  "btn_select_visible": { "message": "Selecciona les visibles" },
+  "btn_deselect_all": { "message": "Desselecciona-ho tot" },
+  "btn_tag_selected": { "message": "Etiqueta" },
+  "btn_exit_selection": { "message": "Surt del mode selecció" },
+  "undo_tag_added_one": { "message": "Etiqueta «$1» aplicada a 1 classe" },
+  "undo_tag_added_other": { "message": "Etiqueta «$1» aplicada a $2 classes" },
+  "undo_tag_removed_one": { "message": "Etiqueta «$1» treta d'1 classe" },
+  "undo_tag_removed_other": { "message": "Etiqueta «$1» treta de $2 classes" },
+  "undo_action": { "message": "Desfés" }
 }

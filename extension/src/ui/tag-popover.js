@@ -13,9 +13,14 @@ CO.tagPopover = (() => {
         current = null;
     }
 
-    function open(classIds) {
+    // fromSelection: abierta desde la barra del modo selección. Tras algún cambio, al cerrarla se
+    // sale del modo (el aviso de deshacer sigue disponible); si se cierra sin cambios, la selección
+    // se conserva. La ventana abierta desde una tarjeta nunca toca el modo selección.
+    function open(classIds, { fromSelection = false } = {}) {
         const { t, escapeHTML, normalize } = CO.i18n;
         close();
+        let changed = false;
+        const offerUndo = fromSelection || classIds.length > 1;
         const overlay = CO.dialogs.createOverlay();
         overlay.innerHTML = `
             <div class="co-popover" role="dialog" aria-modal="true" aria-labelledby="co-popover-title">
@@ -37,10 +42,28 @@ CO.tagPopover = (() => {
             const withTag = classIds.filter(id => CO.tags.has(id, tagId)).length;
             return { withTag, state: withTag === 0 ? 'none' : withTag === classIds.length ? 'all' : 'some' };
         };
-        const toggle = (tagId) => CO.tags.apply(classIds, tagId, stateOf(tagId).state !== 'all');
+        // Añade o quita en todas las clases; en cambios sobre varias guarda una copia y ofrece deshacer
+        const applyTag = (tagId, add) => {
+            const affected = classIds.filter(id => CO.tags.has(id, tagId) !== add);
+            const snap = CO.tags.snapshot(affected);
+            const n = CO.tags.apply(classIds, tagId, add);
+            if (n === 0) return;
+            changed = true;
+            if (!offerUndo) return;
+            const key = (add ? 'undo_tag_added' : 'undo_tag_removed') + (n === 1 ? '_one' : '_other');
+            CO.snackbar.show(t(key, CO.tags.get(tagId).name, n), {
+                actionLabel: t('undo_action'),
+                onAction: () => {
+                    CO.tags.restore(snap);
+                    // Si la ventana sigue abierta, refleja el estado restaurado
+                    if (current === overlay) render();
+                }
+            });
+        };
+        const toggle = (tagId) => applyTag(tagId, stateOf(tagId).state !== 'all');
         const createAndApply = (name) => {
             const result = CO.tags.create(name);
-            if (result.id) CO.tags.apply(classIds, result.id, true);
+            if (result.id) applyTag(result.id, true);
         };
 
         const matches = () => {
@@ -95,9 +118,13 @@ CO.tagPopover = (() => {
             render();
         };
 
-        overlay.querySelector('.co-popover-close').onclick = close;
-        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
-        CO.dialogs.closeOnEscape(overlay, close);
+        const closeThis = () => {
+            close();
+            if (changed && fromSelection) CO.selection.setMode(false);
+        };
+        overlay.querySelector('.co-popover-close').onclick = closeThis;
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeThis(); });
+        CO.dialogs.closeOnEscape(overlay, closeThis);
         document.body.appendChild(overlay);
         current = overlay;
         render();

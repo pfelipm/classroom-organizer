@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "__MSG_extName__",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "__MSG_extDesc__",
   "default_locale": "en",
   "permissions": [
@@ -35,11 +35,14 @@
         "src/features/view-order.js",
         "src/features/drag-lock.js",
         "src/features/filters.js",
+        "src/features/selection.js",
         "src/ui/icons.js",
         "src/ui/dialogs.js",
+        "src/ui/snackbar.js",
         "src/ui/card-tags.js",
         "src/ui/tag-popover.js",
         "src/ui/manage-modal.js",
+        "src/ui/selection-bar.js",
         "src/ui/toolbar.js",
         "src/content.js"
       ],

@@ -3,10 +3,11 @@
 var CO = globalThis.CO || (globalThis.CO = {});
 
 (() => {
-    const { store, adapter, viewOrder, dragLock, filters, toolbar, cardTags } = CO;
+    const { store, adapter, viewOrder, dragLock, filters, selection, toolbar, selectionBar, cardTags } = CO;
     let refreshTimer = null;
     let resizeTimer = null;
     let observer = null;
+    let lastView = null;
 
     function setSort(mode) {
         store.update(data => { data.view.sortWithin = mode; });
@@ -19,21 +20,28 @@ var CO = globalThis.CO || (globalThis.CO = {});
         observer?.disconnect();
         try {
             const view = store.data.view;
-            const list = adapter.activeView() !== null ? adapter.cardList() : null;
+            const activeView = adapter.activeView();
+            const list = activeView !== null ? adapter.cardList() : null;
+            // Al cambiar de vista (o salir de la lista) termina el modo selección
+            if (activeView !== lastView || !list) selection.setMode(false);
+            lastView = activeView;
             if (list) {
                 const cards = adapter.cards(list);
                 // Primero se filtra: las etiquetas solo se pueden ajustar en tarjetas visibles
                 const result = filters.apply(cards);
                 cardTags.renderAll(cards);
+                selection.decorate(cards);
                 viewOrder.apply(view.sortWithin);
-                // Con la vista ordenada o filtrada, reordenar a mano daría resultados inesperados
-                const locked = view.sortWithin !== 'classroom' || filters.isFiltering();
+                // Con la vista ordenada o filtrada, o en modo selección, reordenar a mano daría
+                // resultados inesperados
+                const locked = view.sortWithin !== 'classroom' || filters.isFiltering() || selection.isOn();
                 toolbar.render(toolbar.ensure(setSort), view, result, locked);
                 dragLock.set(locked);
             } else {
                 toolbar.remove();
                 dragLock.set(false);
             }
+            selectionBar.render();
         } finally {
             observe();
         }
@@ -64,6 +72,7 @@ var CO = globalThis.CO || (globalThis.CO = {});
             scheduleRefresh();
         });
         filters.onChange(scheduleRefresh);
+        selection.onChange(scheduleRefresh);
         window.addEventListener('popstate', scheduleRefresh);
         window.addEventListener('resize', onResize);
         refresh();

@@ -115,6 +115,20 @@ CO.tags = (() => {
         return targets.length;
     }
 
+    // Copia de las etiquetas de unas clases, para poder deshacer un cambio
+    function snapshot(classIds) {
+        return new Map(classIds.map(id => [id, data().classTags[id] ? [...data().classTags[id]] : undefined]));
+    }
+
+    function restore(snap) {
+        CO.store.update(d => {
+            snap.forEach((tagIds, classId) => {
+                if (tagIds) d.classTags[classId] = tagIds;
+                else delete d.classTags[classId];
+            });
+        });
+    }
+
     function countClasses(tagId) {
         return Object.values(data().classTags).filter(ids => ids.includes(tagId)).length;
     }
@@ -137,6 +151,8 @@ CO.tags = (() => {
         ofClass,
         has,
         apply,
+        snapshot,
+        restore,
         countClasses
     };
 })();

@@ -215,6 +215,7 @@ CO.cardTags = (() => {
     }
 
     function onChipEnter(el, classId) {
+        if (CO.selection.isOn()) return; // En modo selección, pulsar la tarjeta la marca
         const more = el.closest(`.${CONTAINER_CLASS}`)?.querySelector('.co-more-tags');
         const name = el.querySelector('.co-tag-name');
         const hasHidden = more && !more.hidden;
@@ -233,8 +234,10 @@ CO.cardTags = (() => {
         const changed = new Set(cards.filter(render));
         const toFit = cards.filter(card => changed.has(card) || needsFit(card));
         if (toFit.length) fit(toFit);
-        // Tras un cambio de datos, la lista abierta se actualiza (o se cierra si ya no hay etiquetas)
-        if (tooltip) fillTooltip();
+        // Tras un cambio de datos, la lista abierta se actualiza (o se cierra si ya no hay etiquetas).
+        // En modo selección no tiene sentido: pulsar la tarjeta la marca.
+        if (tooltip && CO.selection.isOn()) closeTooltip();
+        else if (tooltip) fillTooltip();
     }
 
     return { renderAll, fit };

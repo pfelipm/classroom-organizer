@@ -235,8 +235,13 @@ li[data-course-id].co-filtered-out {
     font-size: 12px;
 }
 
-.co-manage-btn {
+.co-toolbar-actions {
+    display: flex;
+    gap: 8px;
     margin-left: auto;
+}
+
+.co-manage-btn {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -254,6 +259,12 @@ li[data-course-id].co-filtered-out {
 
 .co-manage-btn:hover {
     background: var(--co-hover);
+    border-color: var(--co-primary);
+}
+
+/* «Seleccionar» pulsado: se distingue como modo activo */
+.co-select-btn[aria-pressed="true"] {
+    background: var(--co-checked-bg);
     border-color: var(--co-primary);
 }
 
@@ -1038,4 +1049,208 @@ li[data-course-id]:hover .co-tag-add,
     height: 100%;
     opacity: 0;
     cursor: pointer;
+}
+
+/* ===================== Modo selección ===================== */
+/* Casilla: en la fila inferior de la tarjeta, en el sitio del botón de etiquetar */
+.co-select-box {
+    display: none;
+}
+
+.co-selecting .co-select-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    margin: 0 auto 0 12px;
+    align-self: center;
+    border: 2px solid var(--co-text-muted);
+    border-radius: 4px;
+    background: var(--co-surface);
+    flex-shrink: 0;
+    pointer-events: none; /* El clic lo gestiona la tarjeta entera */
+}
+
+.co-selecting .co-select-box[aria-checked="true"] {
+    background: var(--co-primary);
+    border-color: var(--co-primary);
+}
+
+.co-selecting .co-select-box[aria-checked="true"]::after {
+    content: '✓';
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+/* En modo selección, pulsar la tarjeta la marca: fuera el botón de etiquetar y las × (que no
+   actúan), conservando su hueco para que las etiquetas no cambien de ancho al entrar y salir */
+.co-selecting .co-tag-add {
+    display: none;
+}
+
+.co-selecting .co-tag-container .co-tag-remove {
+    visibility: hidden;
+}
+
+.co-selecting li[data-course-id],
+.co-selecting li[data-course-id] * {
+    cursor: pointer !important;
+}
+
+.co-selecting li[data-course-id].co-selected {
+    outline: 3px solid var(--co-primary);
+    outline-offset: -3px;
+    border-radius: 8px;
+}
+
+/* Hueco al final de la lista para que la barra flotante no tape las últimas clases */
+.co-selecting [data-drag-list-group-key] {
+    padding-bottom: 96px;
+}
+
+/* Barra flotante inferior */
+.co-selection-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 15000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: calc(100vw - 48px);
+    box-sizing: border-box;
+    padding: 8px 8px 8px 20px;
+    background: var(--co-surface);
+    border: 1px solid var(--co-border);
+    border-radius: 28px;
+    box-shadow: var(--co-shadow-lg), var(--co-shadow-modal);
+    font-family: var(--co-font);
+    color: var(--co-text);
+    animation: co-floatbar-in 0.15s ease-out;
+}
+
+@keyframes co-floatbar-in {
+    from { opacity: 0; transform: translate(-50%, 12px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.co-selection-bar :focus-visible {
+    outline: 2px solid var(--co-primary);
+    outline-offset: 2px;
+}
+
+.co-selection-info {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-right: 8px;
+}
+
+.co-selection-count {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.co-selection-hint {
+    overflow: hidden;
+    font-size: 11px;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* En ventanas estrechas se recorta en vez de quedar bajo los botones */
+    color: var(--co-text-muted);
+}
+
+.co-selection-hint[hidden] {
+    display: none;
+}
+
+.co-floatbar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 1px solid var(--co-border);
+    border-radius: 20px;
+    background: var(--co-surface);
+    color: var(--co-primary);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.co-floatbar-btn:hover:not(:disabled) {
+    background: var(--co-hover);
+    border-color: var(--co-primary);
+}
+
+.co-floatbar-btn.primary {
+    background: var(--co-primary);
+    border-color: var(--co-primary);
+    color: #ffffff;
+}
+
+.co-floatbar-btn.primary:hover:not(:disabled) {
+    background: var(--co-primary);
+    filter: brightness(0.9);
+}
+
+.co-floatbar-btn:disabled {
+    opacity: 0.45;
+    cursor: default;
+}
+
+/* ===================== Aviso con deshacer ===================== */
+.co-snackbar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 35000; /* Por encima de la ventana de etiquetado: se puede deshacer sin cerrarla */
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: min(560px, calc(100vw - 48px));
+    box-sizing: border-box;
+    padding: 10px 8px 10px 16px;
+    border-radius: 8px;
+    background: #303030;
+    color: #f2f2f2;
+    font-family: var(--co-font);
+    font-size: 14px;
+    box-shadow: var(--co-shadow-lg);
+    animation: co-floatbar-in 0.15s ease-out;
+}
+
+/* Con la barra flotante de selección visible, el aviso se coloca encima de ella */
+.co-selecting .co-snackbar {
+    bottom: 96px;
+}
+
+.co-snackbar-action {
+    flex-shrink: 0;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    color: #a8c7fa;
+    font: inherit;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.co-snackbar-action:hover {
+    background: rgba(168, 199, 250, 0.12);
+}
+
+.co-snackbar-action:focus-visible {
+    outline: 2px solid #a8c7fa;
+    outline-offset: 2px;
 }

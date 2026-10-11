@@ -4,7 +4,7 @@ Extensión de Chrome para **etiquetar, buscar, filtrar, ordenar y agrupar** las 
 
 Es la extensión hermana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer).
 
-> 🚧 **En desarrollo (v0.3.0).** Ya permite etiquetar clases (con colores, prioritarias y panel de gestión), buscarlas, filtrarlas por etiquetas (Y/O) y ordenar la vista por nombre. Próximamente: etiquetado múltiple, copias de seguridad y agrupación.
+> 🚧 **En desarrollo (v0.4.0).** Ya permite etiquetar clases (una a una o varias a la vez, con deshacer), buscarlas, filtrarlas por etiquetas (Y/O) y ordenar la vista por nombre. Próximamente: copias de seguridad y agrupación.
 
 ## 🔒 Privacidad
 
@@ -37,13 +37,16 @@ extension/
     ├── features/
     │   ├── view-order.js    Orden de la vista con CSS order (tarjetas y panel lateral)
     │   ├── drag-lock.js     Bloqueo del arrastre y de «Mover»
-    │   └── filters.js       Búsqueda (nombre y etiquetas) y filtros por etiqueta Y/O
+    │   ├── filters.js       Búsqueda (nombre y etiquetas) y filtros por etiqueta Y/O
+    │   └── selection.js     Modo selección: clic, Mayús+clic (rango visual), Espacio, Esc
     ├── ui/
     │   ├── icons.js         Iconos Material en línea
     │   ├── dialogs.js       Superposición, confirmación, cierre con Escape
+    │   ├── snackbar.js      Aviso inferior con «Deshacer»
     │   ├── card-tags.js     Etiquetas en las tarjetas (con «+N») y botón de etiquetar
     │   ├── tag-popover.js   Ventana de etiquetado (buscar, crear, marcar)
     │   ├── manage-modal.js  Panel de gestión de etiquetas e idioma
+    │   ├── selection-bar.js Barra flotante del modo selección
     │   └── toolbar.js       Barra de la extensión sobre la lista de clases
     └── content.js           Arranque y ciclo de actualización (MutationObserver)
 ```

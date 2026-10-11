@@ -36,7 +36,10 @@ CO.toolbar = (() => {
                         ${SORT_OPTIONS.map(([value, key]) => `<option value="${value}">${escapeHTML(t(key))}</option>`).join('')}
                     </select>
                 </label>
-                <button type="button" class="co-manage-btn">${icon('label', 18)}<span>${escapeHTML(t('btn_manage_tags'))}</span></button>
+                <div class="co-toolbar-actions">
+                    <button type="button" class="co-manage-btn co-select-btn" aria-pressed="false"></button>
+                    <button type="button" class="co-manage-btn co-open-manage">${icon('label', 18)}<span>${escapeHTML(t('btn_manage_tags'))}</span></button>
+                </div>
             </div>
             <div class="co-filter-row" role="group" aria-label="${escapeHTML(t('filter_group_label'))}"></div>
             <div class="co-lock-hint" hidden>${escapeHTML(t('drag_locked_hint'))}</div>`;
@@ -55,7 +58,8 @@ CO.toolbar = (() => {
         });
 
         bar.querySelector('.co-sort-select').addEventListener('change', e => onSortChange(e.target.value));
-        bar.querySelector('.co-manage-btn').onclick = () => CO.manageModal.open();
+        bar.querySelector('.co-open-manage').onclick = () => CO.manageModal.open();
+        bar.querySelector('.co-select-btn').onclick = () => CO.selection.setMode(!CO.selection.isOn());
         isolate(bar);
         return bar;
     }
@@ -148,7 +152,12 @@ CO.toolbar = (() => {
         if (!bar) return;
         const select = bar.querySelector('.co-sort-select');
         if (select.value !== sortWithin) select.value = sortWithin;
-        bar.querySelector('.co-lock-hint').hidden = !locked;
+        bar.querySelector('.co-lock-hint').hidden = !locked || CO.selection.isOn();
+        const selecting = CO.selection.isOn();
+        const selectBtn = bar.querySelector('.co-select-btn');
+        const selectLabel = CO.i18n.t(selecting ? 'btn_select_cancel' : 'btn_select');
+        if (selectBtn.textContent !== selectLabel) selectBtn.textContent = selectLabel;
+        selectBtn.setAttribute('aria-pressed', String(selecting));
         renderFilterRow(bar, result);
         renderEmpty(CO.adapter.dragContainer() || CO.adapter.cardList(), result.total > 0 && result.shown === 0);
     }
