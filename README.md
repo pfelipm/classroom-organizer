@@ -37,6 +37,7 @@ extension/
     ├── features/
     │   ├── view-order.js    Orden de la vista con CSS order (tarjetas y panel lateral)
     │   ├── drag-lock.js     Bloqueo del arrastre y de «Mover»
+    │   └── filters.js       Búsqueda (nombre y etiquetas) y filtros por etiqueta Y/O
     ├── ui/
     │   ├── icons.js         Iconos Material en línea
     │   ├── dialogs.js       Superposición, confirmación, cierre con Escape
