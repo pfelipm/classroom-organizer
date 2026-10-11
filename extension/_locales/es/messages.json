@@ -1,0 +1,9 @@
+{
+  "extName": { "message": "Classroom Organizer" },
+  "extDesc": { "message": "Organiza tus clases de Google Classroom con etiquetas, búsqueda, filtros y ordenación." },
+  "sort_label": { "message": "Ordenar:" },
+  "sort_classroom": { "message": "Orden de Classroom" },
+  "sort_az": { "message": "Nombre (A-Z)" },
+  "sort_za": { "message": "Nombre (Z-A)" },
+  "drag_locked_hint": { "message": "Vuelve a «Orden de Classroom» para reorganizar las clases manualmente." }
+}

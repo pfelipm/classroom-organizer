@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Icono provisional: pizarra verde de Classroom con una etiqueta -->
+  <rect x="4" y="4" width="120" height="120" rx="24" fill="#1e8e3e"/>
+  <rect x="20" y="28" width="88" height="62" rx="6" fill="#ffffff" opacity="0.18"/>
+  <path d="M44 52h30l18 18-18 18H44a6 6 0 0 1-6-6V58a6 6 0 0 1 6-6z" fill="#ffffff"/>
+  <circle cx="52" cy="70" r="6" fill="#1e8e3e"/>
+</svg>

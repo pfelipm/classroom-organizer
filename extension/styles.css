@@ -1,0 +1,71 @@
+/* Classroom Organizer - Estilos
+   Classroom no tiene modo oscuro (DISEÑO.md, 7.2): solo tema claro, pero todos los colores
+   van en variables para poder añadir otro tema sin tocar las reglas. */
+
+:root {
+    --co-text: #1f1f1f;
+    --co-text-muted: #444746;
+    --co-surface: #ffffff;
+    --co-border: #c4c7c5;
+    --co-accent: #0b57d0;
+    --co-radius: 8px;
+    --co-font: "Google Sans Text", "Google Sans", Roboto, Arial, sans-serif;
+}
+
+/* --- Barra de la extensión --- */
+.co-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    margin: 0 0 12px;
+    font-family: var(--co-font);
+    font-size: 14px;
+    color: var(--co-text);
+}
+
+.co-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.co-sort-label {
+    color: var(--co-text-muted);
+}
+
+.co-sort-select {
+    font: inherit;
+    color: var(--co-text);
+    background: var(--co-surface);
+    border: 1px solid var(--co-border);
+    border-radius: var(--co-radius);
+    padding: 4px 8px;
+    cursor: pointer;
+}
+
+.co-sort-select:focus-visible {
+    outline: 2px solid var(--co-accent);
+    outline-offset: 1px;
+}
+
+.co-lock-hint {
+    color: var(--co-text-muted);
+    font-size: 12px;
+}
+
+/* --- Orden de la vista ---
+   Las tarjetas ya están en un flex; el grupo del panel lateral es un bloque y lo convertimos */
+nav [role="group"].co-sorted {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Reordenación nativa bloqueada --- */
+.co-drag-locked li[data-course-id] {
+    user-select: none;
+}
+
+.co-hidden-move {
+    display: none !important;
+}
