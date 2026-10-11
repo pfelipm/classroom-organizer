@@ -100,5 +100,6 @@
   "storage_warning": { "message": "El almacenamiento sincronizado está al $1 %. Si se llena, los cambios dejarán de sincronizarse." },
   "sync_error": { "message": "No se han podido sincronizar los últimos cambios (almacenamiento lleno o error de Chrome Sync). Exporta una copia de seguridad para no perderlos." },
   "dev_mode_warning_title": { "message": "Instalación manual (modo de desarrollo)" },
-  "dev_mode_warning_msg": { "message": "Si desinstalas la extensión, tus etiquetas pueden borrarse de tu cuenta de Google. Exporta una copia de seguridad (botón ↓ de arriba) antes de desinstalarla o de cambiar a la versión de la Chrome Web Store." }
+  "dev_mode_warning_msg": { "message": "Si desinstalas la extensión, tus etiquetas pueden borrarse de tu cuenta de Google. Exporta una copia de seguridad (botón ↓ de arriba) antes de desinstalarla o de cambiar a la versión de la Chrome Web Store." },
+  "filter_empty_hint": { "message": "Para empezar, pasa el ratón por una clase y pulsa su botón de etiqueta, o crea tus etiquetas en «Gestionar etiquetas»." }
 }

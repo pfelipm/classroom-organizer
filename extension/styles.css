@@ -98,6 +98,19 @@
     display: none;
 }
 
+.co-filter-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--co-text-muted);
+}
+
+.co-filter-hint svg {
+    flex-shrink: 0;
+    color: var(--co-primary);
+}
+
 .co-filter-tag {
     display: inline-flex;
     align-items: center;
@@ -221,13 +234,22 @@ li[data-course-id].co-filtered-out {
 }
 
 .co-sort-select {
-    font: inherit;
-    color: var(--co-text);
-    background: var(--co-surface);
+    appearance: none;
+    padding: 6px 32px 6px 14px;
     border: 1px solid var(--co-border);
-    border-radius: var(--co-radius);
-    padding: 4px 8px;
+    border-radius: 18px;
+    /* Flecha propia: el desplegable del navegador desentona con los botones redondeados */
+    background: var(--co-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='20' height='20'%3E%3Cpath fill='%23444746' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 8px center;
+    color: var(--co-text);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
+}
+
+.co-sort-select:hover {
+    background-color: var(--co-hover);
+    border-color: var(--co-primary);
 }
 
 .co-lock-hint {
@@ -355,6 +377,8 @@ li[data-course-id]:hover .co-tag-add,
     display: flex;
     align-items: center;
     box-sizing: border-box;
+    /* Un punto más que en NotebookLM Organizer (10 px): las tarjetas de Classroom son más anchas
+       y en ellas caben las mismas etiquetas, pero se leen mejor */
     height: 20px;
     max-width: 120px;
     padding: 0 8px;
@@ -584,6 +608,15 @@ li[data-course-id]:hover .co-tag-add,
 .co-popover-title {
     font-size: 14px;
     font-weight: 500;
+}
+
+.co-popover-subtitle {
+    margin: -6px 0 10px;
+    overflow: hidden;
+    font-size: 12px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--co-text-muted);
 }
 
 .co-popover-input {

@@ -22,6 +22,8 @@ CO.tagPopover = (() => {
         let changed = false;
         const offerUndo = fromSelection || classIds.length > 1;
         const overlay = CO.dialogs.createOverlay();
+        // Con una sola clase, su nombre bajo el título: así se sabe qué se está etiquetando
+        const className = classIds.length === 1 ? CO.adapter.courseNameById(classIds[0]) : '';
         overlay.innerHTML = `
             <div class="co-popover" role="dialog" aria-modal="true" aria-labelledby="co-popover-title">
                 <div class="co-popover-header">
@@ -29,6 +31,7 @@ CO.tagPopover = (() => {
                         <span class="co-popover-title" id="co-popover-title">${escapeHTML(classIds.length > 1 ? t('popover_title_multi', classIds.length) : t('popover_title'))}</span>
                         <button type="button" class="co-btn-icon co-popover-close" title="${escapeHTML(t('modal_close'))}" aria-label="${escapeHTML(t('modal_close'))}">${CO.icons.icon('close', 18)}</button>
                     </div>
+                    ${className ? `<div class="co-popover-subtitle" title="${escapeHTML(className)}">${escapeHTML(className)}</div>` : ''}
                     <input type="text" class="co-popover-input" placeholder="${escapeHTML(t('popover_search_placeholder'))}" aria-label="${escapeHTML(t('popover_search_placeholder'))}">
                 </div>
                 <div class="co-popover-list" role="group"></div>
@@ -94,7 +97,7 @@ CO.tagPopover = (() => {
             const value = input.value.trim();
             createBox.replaceChildren();
             if (value && !CO.tags.findByName(value)) {
-                const color = CO.tags.DEFAULT_COLOR;
+                const color = CO.tags.suggestColor(); // El que tendrá al crearla
                 const opt = document.createElement('button');
                 opt.type = 'button';
                 opt.className = 'co-create-option';

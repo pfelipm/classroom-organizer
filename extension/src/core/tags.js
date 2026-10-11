@@ -52,8 +52,16 @@ CO.tags = (() => {
         return Object.keys(data().tags).find(id => id !== exceptId && CO.i18n.normalize(data().tags[id].name) === n) || null;
     }
 
+    // Color de la paleta menos usado (a igualdad, el primero): así las etiquetas nuevas no salen
+    // todas del mismo color
+    function suggestColor() {
+        const used = Object.values(data().tags).map(tag => tag.color);
+        const uses = c => used.filter(u => u === c).length;
+        return PRESET_COLORS.reduce((best, c) => (uses(c) < uses(best) ? c : best), PRESET_COLORS[0]);
+    }
+
     // Devuelve { id } o { error: 'empty' | 'duplicate' }
-    function create(name, tagColor = DEFAULT_COLOR) {
+    function create(name, tagColor = suggestColor()) {
         name = name.trim();
         if (!name) return { error: 'empty' };
         if (findByName(name)) return { error: 'duplicate' };
@@ -143,6 +151,7 @@ CO.tags = (() => {
         contrastText,
         isPriority,
         findByName,
+        suggestColor,
         create,
         rename,
         setColor,

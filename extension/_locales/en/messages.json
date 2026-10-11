@@ -100,5 +100,6 @@
   "storage_warning": { "message": "Synced storage is at $1%. If it fills up, changes will stop syncing." },
   "sync_error": { "message": "Your latest changes could not be synced (storage full or Chrome Sync error). Export a backup so you don't lose them." },
   "dev_mode_warning_title": { "message": "Manual installation (developer mode)" },
-  "dev_mode_warning_msg": { "message": "If you uninstall the extension, your tags may be deleted from your Google account. Export a backup (↓ button above) before uninstalling it or switching to the Chrome Web Store version." }
+  "dev_mode_warning_msg": { "message": "If you uninstall the extension, your tags may be deleted from your Google account. Export a backup (↓ button above) before uninstalling it or switching to the Chrome Web Store version." },
+  "filter_empty_hint": { "message": "To get started, hover over a class and press its tag button, or create your tags in “Manage tags”." }
 }

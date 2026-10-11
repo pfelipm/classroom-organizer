@@ -62,6 +62,13 @@ CO.adapter = (() => {
         return (link?.firstElementChild || link)?.textContent.trim() || '';
     }
 
+    // Nombre de una clase a partir de su ID: en su tarjeta o, si no, en el panel lateral
+    function courseNameById(id) {
+        const card = cards().find(c => courseId(c) === id);
+        if (card) return courseName(card);
+        return document.querySelector(`${SEL.sidebarLink}[data-id="${CSS.escape(id)}"]`)?.getAttribute('aria-label') || '';
+    }
+
     // La tarjeta tiene tres partes: cabecera (nombre), cuerpo (trabajo pendiente) y fila inferior
     // (iconos de Classroom, el último hijo). DISEÑO.md, sección 7.2.
     function cardFooter(card) {
@@ -114,6 +121,7 @@ CO.adapter = (() => {
         cardFooter,
         courseId,
         courseName,
+        courseNameById,
         courseRole,
         dragContainer,
         isMoveMenuItem,

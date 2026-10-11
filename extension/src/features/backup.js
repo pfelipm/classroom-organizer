@@ -25,7 +25,10 @@ CO.backup = (() => {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `${APP_ID}-${new Date().toISOString().slice(0, 10)}.json`;
+        // Fecha local (con toISOString saldría la de UTC: el día anterior pasada la medianoche)
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        a.download = `${APP_ID}-${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}.json`;
         a.click();
         URL.revokeObjectURL(url);
     }

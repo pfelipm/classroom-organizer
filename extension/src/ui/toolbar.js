@@ -75,7 +75,11 @@ CO.toolbar = (() => {
         const sig = [tags.map(tag => `${tag.id}:${tag.name}:${CO.tags.color(tag.id)}`).join('|'), activeIds.join(','), mode, filtering, shown, total].join('#');
         if (row.dataset.sig === sig) return;
         row.dataset.sig = sig;
-        row.hidden = tags.length === 0;
+        // Sin etiquetas todavía: una pista para empezar en lugar de la fila de filtros vacía
+        if (tags.length === 0) {
+            row.innerHTML = `<span class="co-filter-hint">${CO.icons.icon('newLabel', 16)}<span>${escapeHTML(t('filter_empty_hint'))}</span></span>`;
+            return;
+        }
 
         const chips = tags.map(tag => {
             const on = activeIds.includes(tag.id);

@@ -100,5 +100,6 @@
   "storage_warning": { "message": "L'emmagatzematge sincronitzat està al $1 %. Si s'omple, els canvis deixaran de sincronitzar-se." },
   "sync_error": { "message": "No s'han pogut sincronitzar els últims canvis (emmagatzematge ple o error de Chrome Sync). Exporta una còpia de seguretat per no perdre'ls." },
   "dev_mode_warning_title": { "message": "Instal·lació manual (mode de desenvolupament)" },
-  "dev_mode_warning_msg": { "message": "Si desinstal·les l'extensió, les teues etiquetes poden esborrar-se del teu compte de Google. Exporta una còpia de seguretat (botó ↓ de dalt) abans de desinstal·lar-la o de canviar a la versió de la Chrome Web Store." }
+  "dev_mode_warning_msg": { "message": "Si desinstal·les l'extensió, les teues etiquetes poden esborrar-se del teu compte de Google. Exporta una còpia de seguretat (botó ↓ de dalt) abans de desinstal·lar-la o de canviar a la versió de la Chrome Web Store." },
+  "filter_empty_hint": { "message": "Per començar, passa el ratolí per una classe i prem el seu botó d'etiqueta, o crea les teues etiquetes a «Gestionar etiquetes»." }
 }

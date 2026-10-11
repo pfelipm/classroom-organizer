@@ -39,7 +39,8 @@ CO.manageModal = (() => {
         const { t, escapeHTML, normalize } = CO.i18n;
         const { icon } = CO.icons;
         const overlay = CO.dialogs.createOverlay();
-        let newColor = CO.tags.DEFAULT_COLOR;
+        // Propuesto: el color menos usado; tras crear, se propone el siguiente
+        let newColor = CO.tags.suggestColor();
         let expandedTag = null; // Etiqueta con la paleta desplegada
         let filterText = '';
         const close = () => { overlay.remove(); unsubscribe(); };
@@ -219,6 +220,8 @@ CO.manageModal = (() => {
                 return;
             }
             createInput.value = '';
+            newColor = CO.tags.suggestColor();
+            renderCreatePalette();
             showFieldError(createError, '');
             filterText = '';
             overlay.querySelector('.co-manage-filter-input').value = '';
