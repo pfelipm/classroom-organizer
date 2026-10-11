@@ -8,12 +8,20 @@ CO.i18n = (() => {
     let overriddenMessages = null; // Caché de traducciones cuando se fuerza un idioma
     let collator = null; // Depende del idioma: se recrea al cambiarlo
 
-    function t(key, ...args) {
+    // Con el contexto de la extensión invalidado (extensión recargada con la pestaña abierta),
+    // chrome.i18n lanza una excepción: devolvemos la clave en lugar de romper la página
+    function getMessage(key, args) {
+        try { return chrome.i18n.getMessage(key, args); } catch { return ''; }
+    }
+
+    function t(key, ...rawArgs) {
+        // chrome.i18n solo admite textos como sustituciones: con números (recuentos) registra un error
+        const args = rawArgs.map(String);
         let msg = "";
         if (uiLang === 'auto' || !overriddenMessages) {
-            msg = chrome.i18n.getMessage(key, args);
+            msg = getMessage(key, args);
         } else {
-            msg = overriddenMessages[key]?.message || chrome.i18n.getMessage(key, args);
+            msg = overriddenMessages[key]?.message || getMessage(key, args);
             // Reemplazo manual para el caso de idioma forzado
             args.forEach((val, i) => {
                 msg = msg.replace(`$${i + 1}`, val);
@@ -42,7 +50,8 @@ CO.i18n = (() => {
 
     // Idioma efectivo, para ordenar con las reglas del idioma de la interfaz
     function locale() {
-        return uiLang === 'auto' ? chrome.i18n.getUILanguage() : uiLang;
+        if (uiLang !== 'auto') return uiLang;
+        try { return chrome.i18n.getUILanguage(); } catch { return navigator.language; }
     }
 
     // Orden natural según el idioma: «2º ESO» antes que «10º», sin distinguir acentos ni mayúsculas

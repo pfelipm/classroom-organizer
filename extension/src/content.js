@@ -16,6 +16,7 @@ var CO = globalThis.CO || (globalThis.CO = {});
     // Vuelve a aplicar la extensión sobre la vista visible. Es idempotente: se llama tras
     // cada cambio en la página (Classroom es una aplicación de una sola página).
     function refresh() {
+        if (!isAlive()) { shutdown(); return; }
         // Nuestros propios cambios también generan mutaciones: no queremos un bucle
         observer?.disconnect();
         try {
@@ -45,6 +46,28 @@ var CO = globalThis.CO || (globalThis.CO = {});
         } finally {
             observe();
         }
+    }
+
+    // Al recargar o actualizar la extensión, Chrome desconecta este script de las pestañas ya
+    // abiertas pero no lo detiene: sus llamadas a chrome.* fallarían («Extension context
+    // invalidated»). Lo detectamos y nos retiramos dejando Classroom como estaba; la página
+    // recargada ya trae el script nuevo.
+    function isAlive() {
+        return !!globalThis.chrome?.runtime?.id;
+    }
+
+    function shutdown() {
+        clearTimeout(refreshTimer);
+        clearTimeout(resizeTimer);
+        observer?.disconnect();
+        observer = null;
+        window.removeEventListener('popstate', scheduleRefresh);
+        window.removeEventListener('resize', onResize);
+        selection.setMode(false);
+        dragLock.set(false);
+        viewOrder.apply('classroom');
+        document.querySelectorAll('.co-toolbar, .co-empty, .co-tag-container, .co-tag-add, .co-select-box, .co-tags-tooltip, .co-modal-overlay, .co-snackbar, .co-selection-bar').forEach(el => el.remove());
+        document.querySelectorAll('.co-filtered-out, .co-selected, .co-card-body').forEach(el => el.classList.remove('co-filtered-out', 'co-selected', 'co-card-body'));
     }
 
     function scheduleRefresh() {

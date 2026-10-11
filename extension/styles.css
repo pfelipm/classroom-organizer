@@ -583,7 +583,8 @@ li[data-course-id]:hover .co-tag-add,
 .co-popover {
     display: flex;
     flex-direction: column;
-    width: 280px;
+    width: 340px;
+    max-width: calc(100vw - 32px);
     max-height: 70vh;
     overflow: hidden;
     background: var(--co-surface);
@@ -611,11 +612,15 @@ li[data-course-id]:hover .co-tag-add,
 }
 
 .co-popover-subtitle {
+    /* Hasta dos líneas: los nombres de clase pueden ser largos; si no caben, «…» (y el nombre
+       completo al pasar el ratón) */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     margin: -6px 0 10px;
     overflow: hidden;
     font-size: 12px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    line-height: 1.35;
     color: var(--co-text-muted);
 }
 
@@ -663,7 +668,7 @@ li[data-course-id]:hover .co-tag-add,
 }
 
 .co-check-item .co-tag {
-    max-width: 180px;
+    max-width: 220px;
     cursor: pointer;
 }
 
