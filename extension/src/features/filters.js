@@ -52,14 +52,16 @@ CO.filters = (() => {
         return query.trim() !== '' || activeTags().length > 0;
     }
 
-    // La búsqueda encuentra el nombre de la clase y los de sus etiquetas, sin acentos ni mayúsculas
+    // La búsqueda mira el nombre de la clase y los de sus etiquetas, sin acentos ni mayúsculas, y
+    // encuentra también partes de palabras («tic» → Matemáticas). Con varias palabras, cada una se
+    // busca por separado y tienen que aparecer todas, en cualquier orden («fís 4» → Física… 4ºA).
     function matches(card) {
         const classId = CO.adapter.courseId(card);
         const tagIds = CO.tags.ofClass(classId);
-        const q = CO.i18n.normalize(query);
-        if (q) {
+        const terms = CO.i18n.normalize(query).split(/\s+/).filter(Boolean);
+        if (terms.length) {
             const haystack = [CO.adapter.courseName(card), ...tagIds.map(id => CO.tags.get(id).name)].map(CO.i18n.normalize);
-            if (!haystack.some(text => text.includes(q))) return false;
+            if (!terms.every(term => haystack.some(text => text.includes(term)))) return false;
         }
         const wanted = activeTags();
         if (wanted.length === 0) return true;

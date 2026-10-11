@@ -75,5 +75,6 @@
   "undo_tag_added_other": { "message": "Etiqueta «$1» aplicada a $2 classes" },
   "undo_tag_removed_one": { "message": "Etiqueta «$1» treta d'1 classe" },
   "undo_tag_removed_other": { "message": "Etiqueta «$1» treta de $2 classes" },
-  "undo_action": { "message": "Desfés" }
+  "undo_action": { "message": "Desfés" },
+  "search_help": { "message": "Cerca en el nom de les classes i en les seues etiquetes, sense distingir majúscules ni accents. Troba també parts de paraules («tic» troba «Matemàtiques»). Amb diverses paraules, han d'aparéixer totes, en qualsevol ordre." }
 }

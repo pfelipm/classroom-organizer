@@ -75,5 +75,6 @@
   "undo_tag_added_other": { "message": "Tag “$1” added to $2 classes" },
   "undo_tag_removed_one": { "message": "Tag “$1” removed from 1 class" },
   "undo_tag_removed_other": { "message": "Tag “$1” removed from $2 classes" },
-  "undo_action": { "message": "Undo" }
+  "undo_action": { "message": "Undo" },
+  "search_help": { "message": "Searches class names and their tags, ignoring case and accents. Also matches parts of words (“tic” finds “Mathematics”). With several words, all of them must appear, in any order." }
 }
