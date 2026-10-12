@@ -1,0 +1,16 @@
+name: 💡 Sugerencia
+description: Una idea o mejora para Classroom Organizer
+labels: ["sugerencia"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: ¿Qué te gustaría?
+      description: Cuéntanos la idea y, si puedes, para qué la usarías en tu día a día con Classroom.
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: ¿Cómo lo resuelves ahora?
+      description: Opcional. Lo que haces hoy sin esta mejora ayuda a entender su utilidad.

@@ -6,7 +6,39 @@
 
 It is the sister extension of [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) and shares its way of working.
 
-> 🚧 **In development (v0.6.6).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually (see the "Installation" section).
+> 🚧 **In development (v0.6.6).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually: see "Try the development version". The screenshot is provisional; final screenshots will be added when version 1.0 is ready for launch and publication.
+
+![Classroom Organizer on the Google Classroom home page](assets/captura-general.png)
+
+---
+
+## 🧪 Try the development version
+
+Thank you for helping to test Classroom Organizer before it is published! Your feedback is what can improve it the most.
+
+### Install it
+1. Download **[classroom-organizer-dev.zip](https://github.com/pfelipm/classroom-organizer/releases/download/dev/classroom-organizer-dev.zip)**. The link always points to the latest version.
+2. Unzip it into a folder you won't delete (for example, in *Documents*). Inside there is a folder called **`classroom-organizer`**.
+3. Open `chrome://extensions`, turn on **Developer mode** (top right), click **Load unpacked** and choose that `classroom-organizer` folder.
+4. Open or reload [Google Classroom](https://classroom.google.com).
+
+> ⚠️ If your device or Chrome profile is managed by your school, it may not let you turn on developer mode. In that case, try with your personal Chrome profile.
+
+### Update it without losing your tags
+1. Just in case, export a backup (**↓** button in the **Manage tags** panel).
+2. Download the ZIP again and replace the contents of the `classroom-organizer` folder with the new ones.
+3. In `chrome://extensions`, click Classroom Organizer's reload button (**↻**) and reload your Classroom tabs.
+
+**Don't uninstall it to update it:** uninstalling deletes your tags (see "Your data").
+
+### What we are especially interested in
+- How it behaves with **many classes** and with cards showing **upcoming work**.
+- Classroom in **other languages** (Galician, Basque…) and on **Chromebooks**.
+- **Syncing** across several devices with the same Chrome profile.
+- Anything that isn't clear at first, looks odd or that you miss.
+
+### Send feedback
+Open a **[GitHub issue](https://github.com/pfelipm/classroom-organizer/issues/new/choose)** and choose **🐞 Error** or **💡 Sugerencia** (suggestion): the form guides you. Include the version shown at the bottom of the **Manage tags** panel and **don't include student data** in screenshots. If you don't have a GitHub account, contact me on [LinkedIn](https://www.linkedin.com/in/pfelipm/).
 
 ---
 
@@ -91,7 +123,7 @@ In the management panel, the **star** next to each tag marks it as a priority ta
 *Coming soon.* It will be the recommended way to install it, and the only possible one in many schools, where the Google Workspace administrator can install it on every teacher's device.
 
 ### Manual installation (developer mode)
-To test the extension before it is published, review the code or contribute:
+To review the code or contribute (to test it, it's easier to follow "Try the development version"):
 
 1. Download and unzip the ZIP file or clone this repository.
 2. Open Google Chrome and go to `chrome://extensions`.

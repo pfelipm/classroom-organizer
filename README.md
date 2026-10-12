@@ -6,7 +6,39 @@
 
 Es la extensión hermana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) y comparte con ella su forma de trabajar.
 
-> 🚧 **En desarrollo (v0.6.6).** La extensión está en fase de pruebas y todavía no está publicada en la Chrome Web Store. De momento se instala de forma manual (consulta la sección «Instalación»).
+> 🚧 **En desarrollo (v0.6.6).** La extensión está en fase de pruebas y todavía no está publicada en la Chrome Web Store. De momento se instala de forma manual: consulta «Prueba la versión de desarrollo». La captura es provisional; las definitivas se añadirán cuando la versión 1.0 esté lista para su lanzamiento y publicación.
+
+![Classroom Organizer en la página principal de Google Classroom](assets/captura-general.png)
+
+---
+
+## 🧪 Prueba la versión de desarrollo
+
+¡Gracias por ayudar a probar Classroom Organizer antes de publicarla! Tus comentarios son lo que más puede mejorarla.
+
+### Instalarla
+1. Descarga **[classroom-organizer-dev.zip](https://github.com/pfelipm/classroom-organizer/releases/download/dev/classroom-organizer-dev.zip)**. El enlace apunta siempre a la última versión.
+2. Descomprímelo en una carpeta que no vayas a borrar (por ejemplo, en *Documentos*). Dentro hay una carpeta llamada **`classroom-organizer`**.
+3. Abre `chrome://extensions`, activa el **Modo de desarrollador** (arriba a la derecha), pulsa **Cargar descomprimida** y elige esa carpeta `classroom-organizer`.
+4. Abre o recarga [Google Classroom](https://classroom.google.com).
+
+> ⚠️ Si tu equipo o tu perfil de Chrome los gestiona tu centro, es posible que no te deje activar el modo de desarrollador. Prueba entonces con tu perfil personal de Chrome.
+
+### Actualizarla sin perder tus etiquetas
+1. Por si acaso, exporta una copia de seguridad (botón **↓** del panel **Gestionar etiquetas**).
+2. Descarga de nuevo el ZIP y sustituye el contenido de la carpeta `classroom-organizer` por el nuevo.
+3. En `chrome://extensions`, pulsa el botón de recarga (**↻**) de Classroom Organizer y recarga las pestañas de Classroom.
+
+**No la desinstales para actualizarla:** desinstalar borra tus etiquetas (consulta «Tus datos»).
+
+### Qué nos interesa especialmente
+- Cómo se comporta con **muchas clases** y con tarjetas que muestran **trabajo pendiente**.
+- Classroom en **otros idiomas** (gallego, euskera…) y en **Chromebooks**.
+- La **sincronización** entre varios equipos con el mismo perfil de Chrome.
+- Cualquier cosa que no se entienda a la primera, se vea rara o eches de menos.
+
+### Enviar comentarios
+Abre una **[incidencia en GitHub](https://github.com/pfelipm/classroom-organizer/issues/new/choose)** y elige **🐞 Error** o **💡 Sugerencia**: el formulario te guía. Indica la versión que aparece al pie del panel **Gestionar etiquetas** y, en las capturas, **no incluyas datos de tu alumnado**. Si no tienes cuenta de GitHub, escríbeme por [LinkedIn](https://www.linkedin.com/in/pfelipm/).
 
 ---
 
@@ -91,7 +123,7 @@ En el panel de gestión, la **estrella** de cada etiqueta la marca como priorita
 *Próximamente.* Será la forma recomendada de instalarla y la única posible en muchos centros educativos, donde el administrador de Google Workspace puede instalarla en todos los equipos del claustro.
 
 ### Instalación manual (modo de desarrollador)
-Para probar la extensión antes de su publicación, revisar el código o contribuir:
+Para revisar el código o contribuir (para probarla, es más sencillo seguir «Prueba la versión de desarrollo»):
 
 1. Descarga y descomprime el archivo ZIP o clona este repositorio en tu equipo.
 2. Abre Google Chrome y ve a `chrome://extensions`.

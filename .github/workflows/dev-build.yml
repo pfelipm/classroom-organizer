@@ -1,0 +1,55 @@
+# Classroom Organizer - ZIP de la versión de desarrollo
+# Con cada push a main (o a mano desde la pestaña Actions) empaqueta la carpeta extension/ tal
+# cual, con la "key" del manifiesto para que el ID sea siempre el mismo en las instalaciones
+# manuales, y la publica en la versión de pruebas "dev". El enlace de descarga no cambia:
+# https://github.com/pfelipm/classroom-organizer/releases/download/dev/classroom-organizer-dev.zip
+name: Versión de desarrollo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dev-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Empaquetar
+        id: pack
+        run: |
+          VERSION=$(python3 -c 'import json; print(json.load(open("extension/manifest.json"))["version"])')
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          # Dentro del ZIP, una carpeta con un nombre reconocible: es la que se elige en
+          # «Cargar descomprimida»
+          mkdir -p build/classroom-organizer
+          cp -r extension/. build/classroom-organizer/
+          (cd build && zip -qr ../classroom-organizer-dev.zip classroom-organizer)
+
+      - name: Publicar en la versión de pruebas «dev»
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.pack.outputs.version }}
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          NOTES="Versión de desarrollo v$VERSION (commit $SHORT_SHA, $(date -u +'%Y-%m-%d %H:%M') UTC).
+
+          Instalación y actualización: consulta la sección «Prueba la versión de desarrollo» del README.
+          ⚠️ Antes de actualizar, no desinstales la extensión: sustituye los archivos de su carpeta y pulsa ↻ en chrome://extensions."
+          # La etiqueta "dev" se mueve al último commit y el ZIP se sustituye
+          git tag -f dev
+          git push -f origin dev
+          if gh release view dev > /dev/null 2>&1; then
+            gh release edit dev --title "Versión de desarrollo (v$VERSION)" --notes "$NOTES" --prerelease
+            gh release upload dev classroom-organizer-dev.zip --clobber
+          else
+            gh release create dev classroom-organizer-dev.zip --title "Versión de desarrollo (v$VERSION)" --notes "$NOTES" --prerelease
+          fi

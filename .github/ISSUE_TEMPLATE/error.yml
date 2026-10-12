@@ -1,0 +1,46 @@
+name: 🐞 Error
+description: Algo no funciona como debería
+labels: ["error"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ¡Gracias por probar Classroom Organizer! Cuanto más concreto seas, antes podremos arreglarlo.
+        **No incluyas datos personales de tu alumnado** en el texto ni en las capturas.
+  - type: textarea
+    id: que-pasa
+    attributes:
+      label: ¿Qué ha pasado?
+      description: Describe el error y qué esperabas que ocurriera.
+    validations:
+      required: true
+  - type: textarea
+    id: pasos
+    attributes:
+      label: Pasos para reproducirlo
+      placeholder: |
+        1. Abro Classroom en «Clases impartidas»
+        2. Pulso «Seleccionar»…
+        3. …
+  - type: input
+    id: version
+    attributes:
+      label: Versión de la extensión
+      description: Aparece al pie del panel «Gestionar etiquetas» (por ejemplo, v0.6.6 (dev)).
+    validations:
+      required: true
+  - type: dropdown
+    id: idioma-classroom
+    attributes:
+      label: Idioma de Classroom
+      options: [Español, Català, English, Galego, Euskara, Otro]
+  - type: dropdown
+    id: equipo
+    attributes:
+      label: Equipo
+      options: [Ordenador con Windows, Mac, Linux, Chromebook, Otro]
+  - type: textarea
+    id: capturas
+    attributes:
+      label: Capturas o consola
+      description: Si puedes, adjunta una captura (sin datos de alumnado) o los errores de chrome://extensions.
