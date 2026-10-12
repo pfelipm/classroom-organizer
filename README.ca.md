@@ -225,6 +225,8 @@ Classroom Organizer funciona analitzant l'estructura de la pàgina de Google Cla
 
 Aquest projecte ha estat creat i és mantingut per **Pablo Felip** ([LinkedIn](https://www.linkedin.com/in/pfelipm/) | [GitHub](https://github.com/pfelipm)).
 
+💡 **Gràcies a Iñaki FC** ([@eneko_fc](https://x.com/eneko_fc) a X), que va llançar la idea responent a X a la publicació d'una nova versió de NotebookLM Organizer: un organitzador per a les classes de Classroom, amb carpetes o etiquetes per agrupar les del mateix curs o matèria, perquè «se'm acumulen moltes classes i el tauler es veu molt saturat». Aquí la tens!
+
 ---
 
 ## 📄 Llicència

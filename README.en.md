@@ -225,6 +225,8 @@ Classroom Organizer works by analyzing the structure of the Google Classroom pag
 
 This project was created and is maintained by **Pablo Felip** ([LinkedIn](https://www.linkedin.com/in/pfelipm/) | [GitHub](https://github.com/pfelipm)).
 
+💡 **Thanks to Iñaki FC** ([@eneko_fc](https://x.com/eneko_fc) on X), who came up with the idea in a reply on X to the announcement of a new version of NotebookLM Organizer: an organizer for Classroom classes, with folders or tags to group those of the same year or subject, because "classes pile up and the home page looks really cluttered". Here it is!
+
 ---
 
 ## 📄 License
