@@ -98,7 +98,7 @@ CO.manageModal = (() => {
                     <span>${escapeHTML(t('dev_mode_warning_msg'))}</span>
                 </div>` : ''}
                 <div class="co-modal-footer">
-                    ${escapeHTML(t('attribution_created_by'))} <a href="https://www.linkedin.com/in/pfelipm/" target="_blank" rel="noopener">Pablo Felip</a>
+                    ${escapeHTML(t('attribution_created_by'))} <a href="https://www.linkedin.com/in/pfelipm/" target="_blank" rel="noopener">Pablo Felip</a> | <a href="https://github.com/pfelipm/classroom-organizer" target="_blank" rel="noopener">GitHub</a>
                     <span class="co-version">· v${escapeHTML(manifest.version)}${isDev ? ' (dev)' : ''}</span>
                 </div>
             </div>`;

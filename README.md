@@ -6,7 +6,7 @@
 
 Es la extensión hermana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) y comparte con ella su forma de trabajar.
 
-> 🚧 **En desarrollo (v0.6.6).** La extensión está en fase de pruebas y todavía no está publicada en la Chrome Web Store. De momento se instala de forma manual: consulta «Prueba la versión de desarrollo». La captura es provisional; las definitivas se añadirán cuando la versión 1.0 esté lista para su lanzamiento y publicación.
+> 🚧 **En desarrollo (v0.6.7).** La extensión está en fase de pruebas y todavía no está publicada en la Chrome Web Store. De momento se instala de forma manual: consulta «Prueba la versión de desarrollo». La captura es provisional; las definitivas se añadirán cuando la versión 1.0 esté lista para su lanzamiento y publicación.
 
 ![Classroom Organizer en la página principal de Google Classroom](assets/captura-general.png)
 

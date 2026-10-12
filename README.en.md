@@ -6,7 +6,7 @@
 
 It is the sister extension of [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) and shares its way of working.
 
-> 🚧 **In development (v0.6.6).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually: see "Try the development version". The screenshot is provisional; final screenshots will be added when version 1.0 is ready for launch and publication.
+> 🚧 **In development (v0.6.7).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually: see "Try the development version". The screenshot is provisional; final screenshots will be added when version 1.0 is ready for launch and publication.
 
 ![Classroom Organizer on the Google Classroom home page](assets/captura-general.png)
 

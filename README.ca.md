@@ -6,7 +6,7 @@
 
 És l'extensió germana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) i en comparteix la manera de treballar.
 
-> 🚧 **En desenvolupament (v0.6.6).** L'extensió està en fase de proves i encara no està publicada a la Chrome Web Store. De moment s'instal·la de manera manual: consulta «Prova la versió de desenvolupament». La captura és provisional; les definitives s'afegiran quan la versió 1.0 estigui a punt per al llançament i la publicació.
+> 🚧 **En desenvolupament (v0.6.7).** L'extensió està en fase de proves i encara no està publicada a la Chrome Web Store. De moment s'instal·la de manera manual: consulta «Prova la versió de desenvolupament». La captura és provisional; les definitives s'afegiran quan la versió 1.0 estigui a punt per al llançament i la publicació.
 
 ![Classroom Organizer a la pàgina principal de Google Classroom](assets/captura-general.png)
 
