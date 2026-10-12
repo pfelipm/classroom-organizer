@@ -23,10 +23,11 @@ CO.adapter = (() => {
     };
 
     // Texto de la opción «Desapuntarse de la clase», que solo tienen las clases en las que eres
-    // profesor invitado. Depende del idioma de Classroom: ampliar con cada idioma comprobado.
-    const LEAVE_CLASS_LABELS = ['Desapuntarse de la clase'];
+    // profesor invitado. Depende del idioma de Classroom: ampliar con cada idioma comprobado
+    // (es, ca, en comprobados en Classroom).
+    const LEAVE_CLASS_LABELS = ['Desapuntarse de la clase', 'Surt de la classe', 'Leave class'];
     // Texto de la opción «Mover» del menú de cada tarjeta (mismo problema de idioma)
-    const MOVE_LABELS = ['Mover'];
+    const MOVE_LABELS = ['Mover', 'Mou', 'Move'];
 
     function path() {
         return location.pathname.replace(/^\/u\/\d+/, '');

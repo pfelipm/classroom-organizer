@@ -6,7 +6,7 @@
 
 És l'extensió germana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) i en comparteix la manera de treballar.
 
-> 🚧 **En desenvolupament (v0.6.5).** L'extensió està en fase de proves i encara no està publicada a la Chrome Web Store. De moment s'instal·la de manera manual (consulta la secció «Instal·lació»).
+> 🚧 **En desenvolupament (v0.6.6).** L'extensió està en fase de proves i encara no està publicada a la Chrome Web Store. De moment s'instal·la de manera manual (consulta la secció «Instal·lació»).
 
 ---
 
@@ -30,7 +30,7 @@ Classroom Organizer està dissenyada sota el principi de **mínim accés necessa
 - ✅ **Etiquetatge múltiple:** selecciona diverses classes (clic, Maj+clic o «Selecciona les visibles») i aplica o treu etiquetes a totes alhora, amb opció de desfer.
 - ⭐ **Etiquetes prioritàries:** marca amb una estrella les etiquetes que vols veure sempre primer a cada classe.
 - 📐 **Etiquetes ajustades a l'espai:** cada targeta mostra tantes etiquetes com hi caben i agrupa la resta en «+N».
-- 👩‍🏫 **A totes les vistes:** funciona a les vistes de classes impartides, de cursos en què t'has inscrit i de classes arxivades.
+- 👩‍🏫 **A totes les vistes:** funciona a «Cursos impartits», «Cursos on us heu inscrit» i «Classes arxivades».
 - 🎛️ **Tauler de gestió complet:** crea, reanomena, acoloreix i elimina etiquetes veient quantes classes té cadascuna, amb filtre ràpid, contrast automàtic del text i mesurador de l'emmagatzematge sincronitzat.
 - 🔄 **Sincronització automàtica:** les teves etiquetes i preferències se sincronitzen entre tots els teus dispositius mitjançant el teu compte de Chrome.
 - 💾 **Còpies de seguretat:** exporta i importa la teva configuració en format JSON, triant quines parts vols restaurar.
@@ -58,7 +58,7 @@ Sota el quadre de cerca apareixen totes les teves etiquetes: prem-ne una per veu
   - **O:** classes que en tenen **alguna**.
 - La cerca i els filtres es combinen: es mostren les classes que compleixen totes dues condicions.
 - El recompte («7 de 14 classes») indica quantes se'n veuen; **Neteja els filtres** treu alhora la cerca i les etiquetes actives.
-- La cerca i els filtres es mantenen en canviar entre les vistes de classes impartides, de cursos en què t'has inscrit i de classes arxivades. El mode I/O es desa.
+- La cerca i els filtres es mantenen en canviar entre «Cursos impartits», «Cursos on us heu inscrit» i «Classes arxivades». El mode I/O es desa.
 
 ### ✅ Etiquetatge múltiple
 1. Prem **Selecciona** a la barra de l'extensió. Apareixen una casella a cada targeta i una barra flotant a la part inferior.
@@ -81,7 +81,7 @@ Al tauler de gestió, l'**estrella** de cada etiqueta la marca com a prioritàri
 ### 🔤 Ordre de la vista i reorganització manual
 - El selector **Ordena** ofereix «Ordre de Classroom» (el teu), «Nom (A-Z)» i «Nom (Z-A)». El tauler lateral segueix el mateix ordre.
 - Ordenar **només canvia el que veus**: l'ordre desat a Classroom no es modifica i torna tan bon punt tries «Ordre de Classroom».
-- Mentre la vista està ordenada per nom, filtrada o en mode selecció, la **reorganització manual de Classroom** (arrossegar targetes o l'opció de moure-les del seu menú) queda **en pausa**, perquè s'aplicaria sobre una vista diferent de la real. Un avís sota la barra ho recorda.
+- Mentre la vista està ordenada per nom, filtrada o en mode selecció, la **reorganització manual de Classroom** (arrossegar targetes o l'opció «Mou» del seu menú) queda **en pausa**, perquè s'aplicaria sobre una vista diferent de la real. Un avís sota la barra ho recorda.
 
 ---
 

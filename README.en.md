@@ -6,7 +6,7 @@
 
 It is the sister extension of [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) and shares its way of working.
 
-> 🚧 **In development (v0.6.5).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually (see the "Installation" section).
+> 🚧 **In development (v0.6.6).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually (see the "Installation" section).
 
 ---
 
