@@ -76,7 +76,6 @@
   "undo_tag_removed_one": { "message": "Etiqueta «$1» quitada de 1 clase" },
   "undo_tag_removed_other": { "message": "Etiqueta «$1» quitada de $2 clases" },
   "undo_action": { "message": "Deshacer" },
-  "search_help": { "message": "Busca en el nombre de las clases y en sus etiquetas, sin distinguir mayúsculas ni acentos. Encuentra también partes de palabras («tic» encuentra «Matemáticas»). Con varias palabras, deben aparecer todas, en cualquier orden." },
   "modal_export_help": { "message": "Exportar copia de seguridad (JSON)" },
   "modal_import_help": { "message": "Importar copia de seguridad (JSON)" },
   "import_title": { "message": "Importar copia de seguridad" },

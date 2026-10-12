@@ -28,7 +28,7 @@ CO.toolbar = (() => {
             <div class="co-toolbar-row">
                 <div class="co-search">
                     <span class="co-search-icon">${icon('search', 20)}</span>
-                    <input type="search" class="co-search-input" placeholder="${escapeHTML(t('search_placeholder'))}" aria-label="${escapeHTML(t('search_placeholder'))}" title="${escapeHTML(t('search_help'))}">
+                    <input type="search" class="co-search-input" placeholder="${escapeHTML(t('search_placeholder'))}" aria-label="${escapeHTML(t('search_placeholder'))}">
                 </div>
                 <label class="co-sort">
                     <span class="co-sort-label">${escapeHTML(t('sort_label'))}</span>

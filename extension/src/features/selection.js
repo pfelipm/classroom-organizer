@@ -129,7 +129,15 @@ CO.selection = (() => {
         if (!on) return;
         // Con un diálogo abierto, Escape y las teclas le pertenecen a él
         if (document.querySelector('.co-modal-overlay')) return;
-        if (e.key === 'Escape') { e.stopImmediatePropagation(); setMode(false); return; }
+        if (e.key === 'Escape') {
+            // Escuchamos en captura, antes que nadie: en un campo con texto (p. ej., la búsqueda),
+            // Escape le pertenece al campo (lo vacía); con el campo vacío, sale del modo
+            const field = e.target.closest?.('input, textarea, [contenteditable="true"]');
+            if (field && (field.value ?? field.textContent)) return;
+            e.stopImmediatePropagation();
+            setMode(false);
+            return;
+        }
         // Intro sobre el enlace de la tarjeta ya genera un clic (y lo recoge onClick)
         if (e.key !== ' ') return;
         const card = cardFromEvent(e);
