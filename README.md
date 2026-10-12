@@ -4,7 +4,7 @@ Extensión de Chrome para **etiquetar, buscar, filtrar, ordenar y agrupar** las 
 
 Es la extensión hermana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer).
 
-> 🚧 **En desarrollo (v0.6.3).** Ya permite etiquetar clases (una a una o varias a la vez, con deshacer), buscarlas, filtrarlas por etiquetas (Y/O), ordenar la vista por nombre y hacer copias de seguridad. Próximamente: agrupación y carpetas.
+> 🚧 **En desarrollo (v0.6.4).** Ya permite etiquetar clases (una a una o varias a la vez, con deshacer), buscarlas, filtrarlas por etiquetas (Y/O), ordenar la vista por nombre y hacer copias de seguridad. Próximamente: agrupación y carpetas.
 
 ## 🔍 Búsqueda y filtros
 

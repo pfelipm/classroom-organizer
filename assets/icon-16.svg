@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+  <!-- Versión simplificada para 16 px: tarjeta con cabecera verde y etiqueta roja -->
+  <rect x="1" y="2" width="11" height="13" rx="1.6" fill="#fff" stroke="#9aa0a6" stroke-width="1"/>
+  <path d="M0.5 3.6a1.6 1.6 0 0 1 1.6-1.6h8.8a1.6 1.6 0 0 1 1.6 1.6V7H0.5z" fill="#1e8e3e"/>
+  <path d="M3 10.5h6M3 12.8h4" stroke="#bdc1c6" stroke-width="1.2" stroke-linecap="round"/>
+  <g transform="translate(7.6 0.6) rotate(-35 4 3)"><path d="M1 0.5h5l2.5 2.5L6 5.5H1a.8.8 0 0 1-.8-.8V1.3A.8.8 0 0 1 1 .5z" fill="#ea4335"/></g>
+</svg>
