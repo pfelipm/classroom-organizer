@@ -6,7 +6,7 @@
 
 It is the sister extension of [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) and shares its way of working.
 
-> 🚧 **In development (v0.6.7).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually: see "Try the development version". The screenshot is provisional; final screenshots will be added when version 1.0 is ready for launch and publication.
+> 🚧 **In development (v0.6.8).** The extension is being tested and is not yet published on the Chrome Web Store. For now it is installed manually: see "Try the development version". The screenshot is provisional; final screenshots will be added when version 1.0 is ready for launch and publication.
 
 ![Classroom Organizer on the Google Classroom home page](assets/captura-general.png)
 
@@ -33,7 +33,7 @@ Thank you for helping to test Classroom Organizer before it is published! Your f
 
 ### What we are especially interested in
 - How it behaves with **many classes** and with cards showing **upcoming work**.
-- Classroom in **other languages** (Galician, Basque…) and on **Chromebooks**.
+- Classroom set to **other languages** (Galician, Basque…): the extension will be shown in Spanish, but it's worth checking that everything works with Classroom's menus in that language. And its use on **Chromebooks**.
 - **Syncing** across several devices with the same Chrome profile.
 - Anything that isn't clear at first, looks odd or that you miss.
 
@@ -66,7 +66,7 @@ Classroom Organizer is designed around the principle of **least access required*
 - 🎛️ **Full management panel:** create, rename, recolor and delete tags while seeing how many classes each one has, with a quick filter, automatic text contrast and a synced storage meter.
 - 🔄 **Automatic sync:** your tags and preferences sync across all your devices through your Chrome account.
 - 💾 **Backups:** export and import your settings as JSON, choosing which parts to restore.
-- 🌐 **Multi-language:** interface in **Spanish, English and Catalan**, switchable instantly from the management panel.
+- 🌐 **Multi-language:** interface in **Spanish, English and Catalan**, switchable instantly from the management panel. With Chrome in Galician or Basque it is shown in Spanish.
 - 🚀 **Quick access:** click the extension icon to open Google Classroom in a new tab (if you are already on Classroom, it does nothing).
 
 ---
@@ -199,7 +199,7 @@ extension/
 ├── manifest.json
 ├── background.js            Icon click → opens Classroom
 ├── styles.css               Styles (light theme only: Classroom has no dark mode)
-├── _locales/{es,en,ca}/     Translations
+├── _locales/               Translations es, en, ca (gl and eu: copies of Spanish)
 └── src/
     ├── core/                i18n.js, store.js (Chrome Sync), tags.js (tag model)
     ├── classroom/           adapter.js: the ONLY module that knows the Classroom page
@@ -207,6 +207,7 @@ extension/
     ├── ui/                  toolbar, card tags, windows, management panel, notices
     └── content.js           Startup and update cycle
 scripts/package-webstore.py  Builds the Chrome Web Store ZIP (without the "key")
+scripts/sync-locales.py      Copies the Spanish translations to gl and eu (run after changing them)
 assets/                      Icon sources
 ```
 

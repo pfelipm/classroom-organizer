@@ -6,7 +6,7 @@
 
 Es la extensión hermana de [NotebookLM Organizer](https://github.com/pfelipm/notebooklm-organizer) y comparte con ella su forma de trabajar.
 
-> 🚧 **En desarrollo (v0.6.7).** La extensión está en fase de pruebas y todavía no está publicada en la Chrome Web Store. De momento se instala de forma manual: consulta «Prueba la versión de desarrollo». La captura es provisional; las definitivas se añadirán cuando la versión 1.0 esté lista para su lanzamiento y publicación.
+> 🚧 **En desarrollo (v0.6.8).** La extensión está en fase de pruebas y todavía no está publicada en la Chrome Web Store. De momento se instala de forma manual: consulta «Prueba la versión de desarrollo». La captura es provisional; las definitivas se añadirán cuando la versión 1.0 esté lista para su lanzamiento y publicación.
 
 ![Classroom Organizer en la página principal de Google Classroom](assets/captura-general.png)
 
@@ -33,7 +33,7 @@ Es la extensión hermana de [NotebookLM Organizer](https://github.com/pfelipm/no
 
 ### Qué nos interesa especialmente
 - Cómo se comporta con **muchas clases** y con tarjetas que muestran **trabajo pendiente**.
-- Classroom en **otros idiomas** (gallego, euskera…) y en **Chromebooks**.
+- Classroom configurado en **otros idiomas** (gallego, euskera…): la extensión se verá en español, pero conviene comprobar que todo funciona con los menús de Classroom en ese idioma. Y su uso en **Chromebooks**.
 - La **sincronización** entre varios equipos con el mismo perfil de Chrome.
 - Cualquier cosa que no se entienda a la primera, se vea rara o eches de menos.
 
@@ -66,7 +66,7 @@ Classroom Organizer está diseñada bajo el principio de **mínimo acceso necesa
 - 🎛️ **Panel de gestión completo:** crea, renombra, colorea y elimina etiquetas viendo cuántas clases tiene cada una, con filtro rápido, contraste automático del texto y medidor del almacenamiento sincronizado.
 - 🔄 **Sincronización automática:** tus etiquetas y preferencias se sincronizan entre todos tus dispositivos mediante tu cuenta de Chrome.
 - 💾 **Copias de seguridad:** exporta e importa tu configuración en formato JSON, eligiendo qué partes restaurar.
-- 🌐 **Multi-idioma:** interfaz en **español, inglés y català**, con cambio de idioma instantáneo desde el panel de gestión.
+- 🌐 **Multi-idioma:** interfaz en **español, inglés y català**, con cambio de idioma instantáneo desde el panel de gestión. Con Chrome en gallego o euskera se muestra en español.
 - 🚀 **Acceso rápido:** haz clic en el icono de la extensión para abrir Google Classroom en una pestaña nueva (si ya estás en Classroom, no hace nada).
 
 ---
@@ -199,7 +199,7 @@ extension/
 ├── manifest.json
 ├── background.js            Clic en el icono → abre Classroom
 ├── styles.css               Estilos (solo tema claro: Classroom no tiene modo oscuro)
-├── _locales/{es,en,ca}/     Traducciones
+├── _locales/               Traducciones es, en, ca (gl y eu: copias del español)
 └── src/
     ├── core/                i18n.js, store.js (Chrome Sync), tags.js (modelo de etiquetas)
     ├── classroom/           adapter.js: ÚNICO módulo que conoce la página de Classroom
@@ -207,6 +207,7 @@ extension/
     ├── ui/                  barra, etiquetas de las tarjetas, ventanas, panel de gestión, avisos
     └── content.js           Arranque y ciclo de actualización
 scripts/package-webstore.py  Genera el ZIP para la Chrome Web Store (sin la "key")
+scripts/sync-locales.py      Copia las traducciones en español a gl y eu (ejecutar tras cambiarlas)
 assets/                      Fuentes del icono
 ```
 
